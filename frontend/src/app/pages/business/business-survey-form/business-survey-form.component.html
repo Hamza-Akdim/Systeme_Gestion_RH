@@ -1,0 +1,106 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div class="text-center mb-5" style="padding-bottom: 1rem;">
+                <div class="text-900 text-3xl font-medium mb-3">{{ isEditMode ? 'Modifier l\'enquête' : 'Nouvelle enquête' }}</div>
+            </div>
+
+            <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
+                <div class="card flex flex-col gap-4">
+                    <div class="flex flex-col gap-2">
+                        <label for="title">Titre*</label>
+                        <input pInputText id="title" formControlName="title" />
+                        <small *ngIf="submitted && surveyForm.controls['title'].errors?.['required']" class="p-error">Le titre est requis.</small>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="status">Statut*</label>
+                        <p-dropdown id="status" formControlName="status" [options]="statuses" optionLabel="label" optionValue="value" placeholder="Sélectionner un statut"></p-dropdown>
+                        <small *ngIf="submitted && surveyForm.controls['status'].errors?.['required']" class="p-error">Le statut est requis.</small>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="description">Description</label>
+                        <textarea pInputTextarea id="description" formControlName="description" rows="3"></textarea>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="targetAudience">Audience cible</label>
+                        <input pInputText id="targetAudience" formControlName="targetAudience" />
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="startDate">Date de début</label>
+                        <p-calendar id="startDate" formControlName="startDate" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-3">
+                        <label for="endDate">Date de fin</label>
+                        <p-calendar id="endDate" formControlName="endDate" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                    </div>
+
+                    <div class="field-checkbox col-12">
+                        <p-checkbox formControlName="isPublic" [binary]="true" inputId="isPublic"></p-checkbox>
+                        <label for="isPublic" style="padding-left: 0.5rem;">Enquête publique</label>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="tags">Tags</label>
+                        <p-chips id="tags" formControlName="tags" separator="," placeholder="Entrez des tags"></p-chips>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <div class="flex flex-col gap-2">
+                            <label for="qst">Question</label>
+                            <button pButton pRipple type="button" label="Ajouter une question" icon="pi pi-plus" class="p-button-outlined" (click)="addQuestion()"></button>
+                        </div>
+
+                        <div formArrayName="questions">
+                            <div *ngFor="let questionGroup of questions.controls; let i = index" [formGroupName]="i" class="question-item p-3 mb-3">
+                                <div class="flex flex-col gap-2">
+                                    <h6 class="m-0">Question {{ i + 1 }}</h6>
+                                    <button pButton pRipple type="button" icon="pi pi-trash" label="Supprimer la question" class="p-button-danger p-button-outlined" (click)="removeQuestion(i)"></button>
+                                </div>
+
+                                <div class="card gap-5">
+                                    <div class="flex flex-col gap-4" style="padding-bottom: 1rem;">
+                                        <label>Texte de la question*</label>
+                                        <input pInputText formControlName="text" />
+                                        <small *ngIf="submitted && questionGroup.get('text')?.errors?.['required']" class="p-error">Le texte de la question est requis.</small>
+                                    </div>
+
+                                    <div class="flex flex-col gap-4" style="padding-bottom: 1rem;">
+                                        <label>Type de question*</label>
+                                        <p-dropdown formControlName="type" [options]="questionTypes" optionLabel="label" optionValue="value" placeholder="Sélectionner un type"></p-dropdown>
+                                        <small *ngIf="submitted && questionGroup.get('type')?.errors?.['required']" class="p-error">Le type de question est requis.</small>
+                                    </div>
+
+                                    <div class="field-checkbox col-12">
+                                        <p-checkbox formControlName="required" [binary]="true" [inputId]="'required_' + i"></p-checkbox>
+                                        <label [for]="'required_' + i" style="padding-left: 0.5rem;">Question obligatoire</label>
+                                    </div>
+
+                                    <div class="field col-12" *ngIf="shouldShowOptions(questionGroup.get('type')?.value)">
+                                        <label>Options (séparées par des virgules)</label>
+                                        <p-chips formControlName="options" separator="," placeholder="Entrez les options"></p-chips>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="questions.length === 0" class="empty-questions p-3">
+                                <p>Aucune question définie. Cliquez sur "Ajouter une question" pour commencer.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field col-12 text-center mb-5" style="padding-top: 2rem;">
+                        <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-outlined p-button-secondary mr-2" type="button" (click)="onCancel()"></button>
+                        <button pButton pRipple label="Enregistrer" icon="pi pi-check" type="submit"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>

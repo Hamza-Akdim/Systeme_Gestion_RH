@@ -1,0 +1,87 @@
+.candidate-list-container {
+    .p-datatable {
+        .p-datatable-header {
+            padding: 1rem;
+            text-align: left;
+            font-size: 1.5rem;
+        }
+        
+        .p-paginator {
+            padding: 1rem;
+        }
+        
+        .p-datatable-thead > tr > th {
+            text-align: left;
+            padding: 1rem;
+            border: 1px solid var(--surface-border);
+            font-weight: 600;
+            color: var(--text-color);
+            background: var(--surface-section);
+            transition: box-shadow 0.2s;
+        }
+        
+        .p-datatable-tbody > tr {
+            background: var(--surface-card);
+            color: var(--text-color);
+            transition: box-shadow 0.2s;
+            
+            &:hover {
+                background: var(--surface-hover);
+            }
+            
+            > td {
+                padding: 1rem;
+                border: 1px solid var(--surface-border);
+            }
+        }
+        
+        .p-column-title {
+            font-weight: 600;
+        }
+    }
+    
+    .candidate-skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .candidate-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+}
+
+.status-badge {
+    border-radius: 2px;
+    padding: .25em .5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: .3px;
+    
+    &.status-available {
+        background: #C8E6C9;
+        color: #256029;
+    }
+    
+    &.status-interviewing {
+        background: #B3E5FC;
+        color: #23547B;
+    }
+    
+    &.status-hired {
+        background: #FEEDAF;
+        color: #8A5340;
+    }
+    
+    &.status-rejected {
+        background: #FFCDD2;
+        color: #C63737;
+    }
+    
+    &.status-pending {
+        background: #ECCFFF;
+        color: #694382;
+    }
+}

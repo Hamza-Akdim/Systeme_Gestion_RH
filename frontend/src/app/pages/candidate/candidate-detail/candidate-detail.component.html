@@ -1,0 +1,125 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div *ngIf="loading" class="flex justify-content-center">
+                <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+            </div>
+            
+            <div *ngIf="!loading" class="candidate-detail">
+                <div class="flex flex-column md:flex-row">
+                    <div class="md:w-4 p-3">
+                        <div class="candidate-profile-card">
+                            <div class="profile-header flex align-items-center mb-4">
+                                <img [src]="candidate.profilePicture || '/images/avatar/circle-big/avatar-m-1.png'" 
+                                     alt="Photo de profil" 
+                                     class="profile-image mr-3" />
+                                <div>
+                                    <h2 class="m-0">{{ candidate.firstName }} {{ candidate.lastName }}</h2>
+                                    <p-tag [value]="getStatusLabel(candidate.status || '')" 
+                                           [severity]="getSeverity(candidate.status || '')">
+                                    </p-tag>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-info">
+                                <div class="info-item">
+                                    <span class="info-label">Email:</span>
+                                    <span class="info-value">{{ candidate.email }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Téléphone:</span>
+                                    <span class="info-value">{{ candidate.phone }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Adresse:</span>
+                                    <span class="info-value">{{ candidate.address }}, {{ candidate.city }}, {{ candidate.postalCode }}, {{ candidate.country }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Expérience:</span>
+                                    <span class="info-value">{{ candidate.experience }} ans</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Formation:</span>
+                                    <span class="info-value">{{ candidate.education }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Évaluation:</span>
+                                    <span class="info-value">
+                                        <p-rating [ngModel]="candidate.rating" [readonly]="true" [cancel]="false"></p-rating>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="profile-actions mt-4">
+                                <button pButton pRipple label="Modifier" icon="pi pi-pencil" class="p-button-outlined mr-2" 
+                                        [routerLink]="['/pages/candidate', candidate.id, 'edit']"></button>
+                                <button pButton pRipple label="Nouvelle candidature" icon="pi pi-plus" class="p-button-success" 
+                                        [routerLink]="['/pages/candidate/applications/new']" 
+                                        [queryParams]="{candidateId: candidate.id}"></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-8 p-3">
+                        <p-tabView>
+                            <p-tabPanel header="Informations">
+                                <div class="grid">
+                                    <div class="col-12 md:col-6">
+                                        <div class="card">
+                                            <h5>Compétences</h5>
+                                            <app-skills-viewer [skills]="candidate.skills"></app-skills-viewer>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 md:col-6">
+                                        <div class="card">
+                                            <h5>Notes</h5>
+                                            <p>{{ candidate.notes }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <h5>CV</h5>
+                                            <app-resume-viewer [resumeUrl]="candidate.resumeUrl"></app-resume-viewer>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                            
+                            <p-tabPanel header="Candidatures">
+                                <div *ngIf="applications.length === 0" class="empty-applications">
+                                    <p>Aucune candidature pour ce candidat.</p>
+                                    <button pButton pRipple label="Créer une candidature" icon="pi pi-plus" 
+                                            [routerLink]="['/pages/candidate/applications/new']" 
+                                            [queryParams]="{candidateId: candidate.id}"></button>
+                                </div>
+                                
+                                <div *ngIf="applications.length > 0" class="applications-list">
+                                    <div *ngFor="let application of applications" class="application-item p-3 mb-3">
+                                        <div class="flex justify-content-between align-items-center">
+                                            <div>
+                                                <h5 class="m-0">{{ application.jobTitle }}</h5>
+                                                <p class="text-sm text-color-secondary mb-2">
+                                                    Candidature du {{ application.appliedDate | date:'dd/MM/yyyy' }}
+                                                </p>
+                                            </div>
+                                            <p-tag [value]="application.status" [severity]="getSeverity(application.status || '')"></p-tag>
+                                        </div>
+                                        
+                                        <app-application-status-tracker [application]="application"></app-application-status-tracker>
+                                        
+                                        <div class="application-actions mt-3">
+                                            <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info mr-2" 
+                                                    [routerLink]="['/pages/candidate/applications', application.id]"></button>
+                                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success" 
+                                                    [routerLink]="['/pages/candidate/applications', application.id, 'edit']"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                        </p-tabView>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

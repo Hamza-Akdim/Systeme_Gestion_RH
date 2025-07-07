@@ -1,0 +1,28 @@
+<div class="resume-container">
+    <div *ngIf="!resumeUrl" class="no-resume">
+        <p>Aucun CV disponible</p>
+    </div>
+    
+    <div *ngIf="resumeUrl" class="resume-viewer">
+        <div class="resume-actions mb-3">
+            <button pButton pRipple label="Télécharger le CV" 
+                    icon="pi pi-download" 
+                    class="p-button-outlined"
+                    [disabled]="!resumeUrl"
+                    (click)="openResume()">
+            </button>
+        </div>
+        
+        <div class="resume-preview">
+            <img *ngIf="resumeUrl && resumeUrl.endsWith('.png') || resumeUrl.endsWith('.jpg') || resumeUrl.endsWith('.jpeg')" 
+                 [src]="resumeUrl" 
+                 alt="Aperçu du CV" 
+                 class="resume-image" />
+                 
+            <div *ngIf="resumeUrl && resumeUrl.endsWith('.pdf')" class="pdf-placeholder">
+                <i class="pi pi-file-pdf" style="font-size: 3rem; color: #e53935;"></i>
+                <p>Aperçu PDF non disponible. Cliquez sur Télécharger pour voir le document.</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+
+<div class="card">
+    <div class="surface-card p-4 shadow-2 border-round">
+        <div class="text-center mb-5">
+            <div class="text-900 text-3xl font-medium mb-3">Profil Utilisateur</div>
+            <span class="text-600 font-medium">Gérez vos informations personnelles</span>
+        </div>
+
+        <div class="grid">
+            <div class="col-12 md:col-4 flex flex-column align-items-center mb-4 md:mb-0">
+                <div class="relative mb-3">
+                    <img [src]="profileImageUrl || 'assets/layout/images/avatar-placeholder.png'" class="shadow-2 w-10rem h-10rem border-circle" alt="Photo de profil">
+                    <button pButton pRipple type="button" icon="pi pi-camera" class="p-button-rounded p-button-outlined absolute" style="bottom: 0; right: 0;" (click)="fileInput.click()"></button>
+                    <input #fileInput type="file" (change)="onFileSelected($event)" style="display:none" accept="image/*">
+                </div>
+                <h2 class="text-xl font-medium mt-2 mb-1">{{profileForm.get('firstName')?.value}} {{profileForm.get('lastName')?.value}}</h2>
+                <p class="text-600 mt-0 mb-3">{{profileForm.get('jobTitle')?.value}}</p>
+            </div>
+
+            <div class="col-12 md:col-8">
+                <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+                    <div class="grid formgrid p-fluid">
+                        <div class="field col-12 md:col-6 mb-4">
+                            <label for="firstName" class="font-medium text-900">Prénom</label>
+                            <input id="firstName" type="text" pInputText formControlName="firstName">
+                            <small *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched" class="p-error">Prénom requis</small>
+                        </div>
+
+                        <div class="field col-12 md:col-6 mb-4">
+                            <label for="lastName" class="font-medium text-900">Nom</label>
+                            <input id="lastName" type="text" pInputText formControlName="lastName">
+                            <small *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched" class="p-error">Nom requis</small>
+                        </div>
+
+                        <div class="field col-12 mb-4">
+                            <label for="email" class="font-medium text-900">Email</label>
+                            <input id="email" type="email" pInputText formControlName="email">
+                            <small *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="p-error">Email invalide</small>
+                        </div>
+
+                        <div class="field col-12 md:col-6 mb-4">
+                            <label for="phoneNumber" class="font-medium text-900">Téléphone</label>
+                            <input id="phoneNumber" type="text" pInputText formControlName="phoneNumber">
+                        </div>
+
+                        <div class="field col-12 md:col-6 mb-4">
+                            <label for="jobTitle" class="font-medium text-900">Titre du poste</label>
+                            <input id="jobTitle" type="text" pInputText formControlName="jobTitle">
+                        </div>
+
+                        <div class="field col-12 mb-4">
+                            <label for="department" class="font-medium text-900">Département</label>
+                            <p-dropdown id="department" [options]="departments" formControlName="department" placeholder="Sélectionnez un département" optionLabel="name" optionValue="code" [style]="{'width':'100%'}"></p-dropdown>
+                        </div>
+
+                        <div class="field col-12 mb-4">
+                            <label for="address" class="font-medium text-900">Adresse</label>
+                            <textarea id="address" pInputTextarea formControlName="address" [rows]="3" [autoResize]="true"></textarea>
+                        </div>
+
+                        <div class="field col-12 md:col-4 mb-4">
+                            <label for="city" class="font-medium text-900">Ville</label>
+                            <input id="city" type="text" pInputText formControlName="city">
+                        </div>
+
+                        <div class="field col-12 md:col-4 mb-4">
+                            <label for="postalCode" class="font-medium text-900">Code postal</label>
+                            <input id="postalCode" type="text" pInputText formControlName="postalCode">
+                        </div>
+
+                        <div class="field col-12 md:col-4 mb-4">
+                            <label for="country" class="font-medium text-900">Pays</label>
+                            <p-dropdown id="country" [options]="countries" formControlName="country" placeholder="Sélectionnez un pays" optionLabel="name" optionValue="code" [style]="{'width':'100%'}"></p-dropdown>
+                        </div>
+
+                        <div class="field col-12 mb-4">
+                            <label for="biography" class="font-medium text-900">Biographie</label>
+                            <textarea id="biography" pInputTextarea formControlName="biography" [rows]="5" [autoResize]="true"></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <p-divider></p-divider>
+                        </div>
+
+                        <div class="col-12">
+                            <h3>Changer le mot de passe</h3>
+                        </div>
+
+                        <div class="field col-12 mb-4">
+                            <label for="currentPassword" class="font-medium text-900">Mot de passe actuel</label>
+                            <p-password id="currentPassword" formControlName="currentPassword" [toggleMask]="true" [feedback]="false" styleClass="w-full"></p-password>
+                        </div>
+
+                        <div class="field col-12 md:col-6 mb-4">
+                            <label for="newPassword" class="font-medium text-900">Nouveau mot de passe</label>
+                            <p-password id="newPassword" formControlName="newPassword" [toggleMask]="true" [feedback]="true" styleClass="w-full"></p-password>
+                            <small *ngIf="profileForm.get('newPassword')?.invalid && profileForm.get('newPassword')?.dirty && profileForm.get('newPassword')?.value" class="p-error">Le mot de passe doit contenir au moins 8 caractères</small>
+                        </div>
+
+                        <div class="field col-12 md:col-6 mb-4">
+                            <label for="confirmPassword" class="font-medium text-900">Confirmer le mot de passe</label>
+                            <p-password id="confirmPassword" formControlName="confirmPassword" [toggleMask]="true" [feedback]="false" styleClass="w-full"></p-password>
+                            <small *ngIf="profileForm.errors?.['passwordMismatch'] && profileForm.get('confirmPassword')?.dirty && profileForm.get('confirmPassword')?.value" class="p-error">Les mots de passe ne correspondent pas</small>
+                        </div>
+
+                        <div class="col-12 flex justify-content-end">
+                            <button pButton pRipple type="button" label="Annuler" class="p-button-text mr-2" (click)="resetForm()"></button>
+                            <button pButton pRipple type="submit" label="Enregistrer" [disabled]="profileForm.invalid || isLoading">
+                                <i *ngIf="isLoading" class="pi pi-spin pi-spinner mr-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

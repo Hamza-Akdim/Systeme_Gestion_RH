@@ -1,0 +1,48 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h5>Tableau de bord des candidats</h5>
+            <p>Visualisez les statistiques et tendances du recrutement.</p>
+            
+            <div *ngIf="loading" class="flex justify-content-center">
+                <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+            </div>
+            
+            <div *ngIf="!loading" class="dashboard-container">
+                <div class="grid">
+                    <div class="col-12 md:col-6">
+                        <p-card styleClass="h-full">
+                            <div class="chart-container">
+                                <p-chart type="pie" [data]="candidateStatusData" [options]="candidateStatusOptions"></p-chart>
+                            </div>
+                        </p-card>
+                    </div>
+                    
+                    <div class="col-12 md:col-6">
+                        <p-card styleClass="h-full">
+                            <div class="chart-container">
+                                <p-chart type="pie" [data]="applicationStatusData" [options]="applicationStatusOptions"></p-chart>
+                            </div>
+                        </p-card>
+                    </div>
+                    
+                    <div class="col-12">
+                        <p-card styleClass="h-full">
+                            <div class="chart-container">
+                                <p-chart type="line" [data]="applicationTimelineData" [options]="applicationTimelineOptions"></p-chart>
+                            </div>
+                        </p-card>
+                    </div>
+                    
+                    <div class="col-12">
+                        <p-card styleClass="h-full">
+                            <div class="chart-container">
+                                <p-chart type="bar" [data]="candidatesBySkillData" [options]="candidatesBySkillOptions"></p-chart>
+                            </div>
+                        </p-card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

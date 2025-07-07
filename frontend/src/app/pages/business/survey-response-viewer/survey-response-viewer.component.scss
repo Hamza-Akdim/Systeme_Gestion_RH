@@ -1,0 +1,69 @@
+.response-viewer {
+  .response-header {
+    padding: 1rem;
+    
+    h3 {
+      margin: 0 0 1rem 0;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+    
+    .response-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      
+      .meta-item {
+        margin-bottom: 0.5rem;
+        
+        .meta-label {
+          font-weight: 600;
+          color: var(--text-color-secondary);
+          margin-right: 0.5rem;
+        }
+        
+        .meta-value {
+          color: var(--text-color);
+        }
+      }
+    }
+  }
+  
+  .response-content {
+    .no-answers, .no-response {
+      font-style: italic;
+      color: var(--text-color-secondary);
+      padding: 1rem 0;
+    }
+    
+    .answers-list {
+      .answer-item {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--surface-border);
+        
+        &:last-child {
+          margin-bottom: 0;
+          padding-bottom: 0;
+          border-bottom: none;
+        }
+        
+        .question {
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+        }
+        
+        .answer {
+          color: var(--text-color);
+        }
+      }
+    }
+    
+    .feedback {
+      p {
+        margin: 0;
+        color: var(--text-color);
+      }
+    }
+  }
+}

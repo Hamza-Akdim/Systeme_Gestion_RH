@@ -1,0 +1,106 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h5>Gestion des Candidatures</h5>
+            <p>Gérez les candidatures et suivez leur progression dans le processus de recrutement.</p>
+
+            <p-toast></p-toast>
+            <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+            <div class="card">
+                <p-toolbar styleClass="mb-4">
+                    <ng-template pTemplate="left">
+                        <div class="my-2">
+                            <button pButton pRipple label="Nouvelle candidature" icon="pi pi-plus" class="p-button-success mr-2" [routerLink]="['/pages/candidate/applications/new']" [queryParams]="candidateId ? {candidateId: candidateId} : {}"></button>
+                            <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedApplications()" [disabled]="!selectedApplications || !selectedApplications.length"></button>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="right">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Rechercher..." />
+                        </span>
+                    </ng-template>
+                </p-toolbar>
+
+                <p-table 
+                    #dt 
+                    [value]="applications" 
+                    [rows]="10" 
+                    [paginator]="true" 
+                    [globalFilterFields]="['jobTitle', 'status']"
+                    [tableStyle]="{ 'min-width': '75rem' }"
+                    [(selection)]="selectedApplications" 
+                    [rowHover]="true" 
+                    dataKey="id"
+                    [loading]="loading"
+                    [showCurrentPageReport]="true"
+                    currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} candidatures"
+                    [rowsPerPageOptions]="[10, 25, 50]">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 3rem">
+                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                            </th>
+                            <th pSortableColumn="jobTitle">Poste <p-sortIcon field="jobTitle"></p-sortIcon></th>
+                            <th pSortableColumn="appliedDate">Date de candidature <p-sortIcon field="appliedDate"></p-sortIcon></th>
+                            <th pSortableColumn="status">Statut <p-sortIcon field="status"></p-sortIcon></th>
+                            <th pSortableColumn="interviewDate">Date d'entretien <p-sortIcon field="interviewDate"></p-sortIcon></th>
+                            <th pSortableColumn="offerStatus">Statut de l'offre <p-sortIcon field="offerStatus"></p-sortIcon></th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-application>
+                        <tr>
+                            <td>
+                                <p-tableCheckbox [value]="application"></p-tableCheckbox>
+                            </td>
+                            <td>{{ application.jobTitle }}</td>
+                            <td>{{ application.appliedDate | date:'dd/MM/yyyy' }}</td>
+                            <td>
+                                <p-tag [value]="getStatusLabel(application.status || '')" [severity]="getSeverity(application.status || '')"></p-tag>
+                            </td>
+                            <td>{{ application.interviewDate | date:'dd/MM/yyyy' }}</td>
+                            <td>{{ application.offerStatus }}</td>
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info mr-2" [routerLink]="['/pages/candidate/applications', application.id]"></button>
+                                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/pages/candidate/applications', application.id, 'edit']"></button>
+                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteApplication(application)"></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="summary">
+                        <div class="flex align-items-center justify-content-between">
+                            Au total il y a {{ applications ? applications.length : 0 }} candidatures.
+                        </div>
+                    </ng-template>
+                </p-table>
+            </div>
+
+            <p-dialog [(visible)]="deleteApplicationDialog" header="Confirmation" [modal]="true" [style]="{ width: '450px' }">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span *ngIf="application">Êtes-vous sûr de vouloir supprimer la candidature pour <b>{{ application.jobTitle }}</b> ?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteApplicationDialog = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button>
+                </ng-template>
+            </p-dialog>
+
+            <p-dialog [(visible)]="deleteApplicationsDialog" header="Confirmation" [modal]="true" [style]="{ width: '450px' }">
+                <div class="flex align-items-center justify-content-center">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                    <span>Êtes-vous sûr de vouloir supprimer les candidatures sélectionnées ?</span>
+                </div>
+                <ng-template pTemplate="footer">
+                    <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteApplicationsDialog = false"></button>
+                    <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDeleteSelected()"></button>
+                </ng-template>
+            </p-dialog>
+        </div>
+    </div>
+</div>

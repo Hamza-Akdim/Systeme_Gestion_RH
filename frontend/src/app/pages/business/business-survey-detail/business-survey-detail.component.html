@@ -1,0 +1,177 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div *ngIf="loading" class="flex justify-content-center">
+                <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+            </div>
+
+            <div *ngIf="!loading" class="survey-detail">
+                <div class="flex flex-column md:flex-row">
+                    <div class="md:w-4 p-3">
+                        <div class="survey-info-card">
+                            <div class="survey-header mb-4">
+                                <h2 class="m-0">{{ survey.title }}</h2>
+                                <p-tag [value]="getStatusLabel(survey.status || '')"
+                                       [severity]="getStatusSeverity(survey.status || '')">
+                                </p-tag>
+                            </div>
+
+                            <div class="survey-description mb-3">
+                                <p>{{ survey.description }}</p>
+                            </div>
+
+                            <div class="survey-info">
+                                <div class="info-item">
+                                    <span class="info-label">Audience cible:</span>
+                                    <span class="info-value">{{ survey.targetAudience }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Date de début:</span>
+                                    <span class="info-value">{{ survey.startDate | date:'dd/MM/yyyy' }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Date de fin:</span>
+                                    <span class="info-value">{{ survey.endDate | date:'dd/MM/yyyy' }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Créé par:</span>
+                                    <span class="info-value">{{ survey.createdBy }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Créé le:</span>
+                                    <span class="info-value">{{ survey.createdAt | date:'dd/MM/yyyy' }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Visibilité:</span>
+                                    <span class="info-value">{{ survey.isPublic ? 'Publique' : 'Privée' }}</span>
+                                </div>
+                            </div>
+
+                            <div class="survey-tags mt-3" *ngIf="survey.tags && survey.tags.length > 0">
+                                <label>Tags</label>
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    <p-tag *ngFor="let tag of survey.tags" [value]="tag"></p-tag>
+                                </div>
+                            </div>
+
+                            <div class="survey-stats mt-4">
+                                <div class="grid">
+                                    <div class="col-6">
+                                        <div class="stat-card">
+                                            <div class="stat-value">{{ getResponseCount() }}</div>
+                                            <div class="stat-label">Réponses</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="stat-card">
+                                            <div class="stat-value">{{ getAverageSatisfactionScore() | number:'1.1-1' }}</div>
+                                            <div class="stat-label">Score moyen</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="survey-actions mt-4">
+                                <button pButton pRipple label="Modifier" icon="pi pi-pencil" class="p-button-outlined mr-2"
+                                        [routerLink]="['/pages/business/surveys', survey.id, 'edit']"></button>
+                                <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger mr-2"
+                                        (click)="deleteSurvey()"></button>
+                                <button pButton pRipple label="Retour à la liste" icon="pi pi-arrow-left" class="p-button-secondary"
+                                        [routerLink]="['/pages/business/surveys']"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:w-8 p-3">
+                        <p-tabView>
+                            <p-tabPanel header="Questions">
+                                <div class="questions-container p-3">
+                                    <h5>Questions de l'enquête</h5>
+
+                                    <div *ngIf="!survey.questions || survey.questions.length === 0" class="empty-questions">
+                                        <p>Aucune question définie pour cette enquête.</p>
+                                    </div>
+
+                                    <div *ngIf="survey.questions && survey.questions.length > 0" class="question-list">
+                                        <div *ngFor="let question of survey.questions" class="question-item p-3 mb-3">
+                                            <div class="question-header">
+                                                <h6 class="m-0">{{ question.text }}</h6>
+                                                <p-tag [value]="getQuestionTypeLabel(question.type || '')"></p-tag>
+                                            </div>
+                                            <div class="question-details mt-2">
+                                                <span class="question-required">{{ question.required ? 'Obligatoire' : 'Optionnelle' }}</span>
+                                                <div *ngIf="question.options && question.options.length > 0" class="question-options mt-2">
+                                                    <span class="options-label">Options:</span>
+                                                    <ul>
+                                                        <li *ngFor="let option of question.options">{{ option }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+
+                            <p-tabPanel header="Réponses">
+                                <div class="responses-container p-3">
+                                    <h5>Réponses à l'enquête</h5>
+
+                                    <div *ngIf="!responses || responses.length === 0" class="empty-responses">
+                                        <p>Aucune réponse reçue pour cette enquête.</p>
+                                    </div>
+
+                                    <div *ngIf="responses && responses.length > 0">
+                                        <p-table [value]="responses" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th>Répondant</th>
+                                                    <th>Entreprise</th>
+                                                    <th>Date</th>
+                                                    <th>Score</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-response>
+                                                <tr>
+                                                    <td>{{ response.respondentName }}</td>
+                                                    <td>{{ response.respondentCompany }}</td>
+                                                    <td>{{ response.submittedAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                                                    <td>{{ response.satisfactionScore }}</td>
+                                                    <td>
+                                                        <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info"
+                                                                (click)="viewResponse(response)"></button>
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+
+                            <p-tabPanel header="Statistiques">
+                                <div class="statistics-container p-3">
+                                    <h5>Statistiques de l'enquête</h5>
+
+                                    <div *ngIf="!responses || responses.length === 0" class="empty-statistics">
+                                        <p>Aucune donnée statistique disponible pour cette enquête.</p>
+                                    </div>
+
+                                    <div *ngIf="responses && responses.length > 0" class="statistics-charts">
+                                        <div class="grid">
+                                            <div class="col-12 md:col-6">
+                                                <app-satisfaction-score-chart [responses]="responses"></app-satisfaction-score-chart>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                        </p-tabView>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

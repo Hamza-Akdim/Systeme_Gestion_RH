@@ -1,0 +1,89 @@
+.prospect-detail {
+  .prospect-info-card {
+    background-color: var(--surface-card);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    .prospect-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      h2 {
+        font-weight: 700;
+        color: var(--text-color);
+      }
+    }
+    
+    .prospect-company {
+      h3 {
+        margin: 0;
+        font-weight: 600;
+        color: var(--text-color);
+      }
+      
+      p {
+        margin: 0.25rem 0 0 0;
+        color: var(--text-color-secondary);
+      }
+    }
+    
+    .prospect-rating {
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--text-color-secondary);
+      }
+    }
+    
+    .prospect-info {
+      margin-top: 1.5rem;
+      
+      .info-item {
+        margin-bottom: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        
+        .info-label {
+          font-weight: 600;
+          color: var(--text-color-secondary);
+          margin-bottom: 0.25rem;
+        }
+        
+        .info-value {
+          color: var(--text-color);
+        }
+      }
+    }
+    
+    .prospect-tags {
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--text-color-secondary);
+      }
+    }
+    
+    .prospect-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+  }
+  
+  .notes-container, .surveys-container, .history-container {
+    h5 {
+      margin-top: 0;
+      color: var(--text-color);
+      font-weight: 600;
+    }
+    
+    p {
+      color: var(--text-color-secondary);
+    }
+  }
+}

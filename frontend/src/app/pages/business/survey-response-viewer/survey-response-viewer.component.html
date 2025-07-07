@@ -1,0 +1,54 @@
+<div *ngIf="response" class="response-viewer">
+    <p-card>
+        <ng-template pTemplate="header">
+            <div class="response-header">
+                <h3>Réponse de {{ response.respondentName }}</h3>
+                <div class="response-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Entreprise:</span>
+                        <span class="meta-value">{{ response.respondentCompany }}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Email:</span>
+                        <span class="meta-value">{{ response.respondentEmail }}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Date:</span>
+                        <span class="meta-value">{{ response.submittedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+                    <div class="meta-item" *ngIf="response.satisfactionScore !== undefined">
+                        <span class="meta-label">Score de satisfaction:</span>
+                        <span class="meta-value">{{ response.satisfactionScore }}/5</span>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        
+        <div class="response-content">
+            <p-accordion [multiple]="true">
+                <p-accordionTab header="Réponses aux questions" [selected]="true">
+                    <div *ngIf="!response.answers || response.answers.length === 0" class="no-answers">
+                        <p>Aucune réponse aux questions.</p>
+                    </div>
+                    
+                    <div *ngIf="response.answers && response.answers.length > 0" class="answers-list">
+                        <div *ngFor="let answer of response.answers" class="answer-item">
+                            <div class="question">{{ getQuestionText(answer.questionId || '') }}</div>
+                            <div class="answer">{{ formatAnswerValue(answer.value, getQuestionType(answer.questionId || '')) }}</div>
+                        </div>
+                    </div>
+                </p-accordionTab>
+                
+                <p-accordionTab header="Commentaires" *ngIf="response.feedback">
+                    <div class="feedback">
+                        <p>{{ response.feedback }}</p>
+                    </div>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+    </p-card>
+</div>
+
+<div *ngIf="!response" class="no-response">
+    <p>Aucune réponse sélectionnée.</p>
+</div>

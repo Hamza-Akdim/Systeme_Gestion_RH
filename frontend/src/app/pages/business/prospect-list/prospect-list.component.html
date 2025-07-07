@@ -1,0 +1,120 @@
+<div class="grid">
+    <div class="col-12" >
+        <div class="card" style="width: 76%;">
+            <div class="text-center mb-5" style="padding-bottom: 1rem;">
+                <div class="text-900 text-3xl font-medium mb-3">Liste des prospects</div>
+                <span class="text-600 font-medium">Gérez vos prospects et suivez leur etat.</span>
+            </div>
+
+
+            <p-toolbar class="mb-2">
+                    <ng-template pTemplate="left">
+                        <div class="flex gap-2 items-center flex-wrap">
+                            <button pButton pRipple label="Nouveau prospect" icon="pi pi-plus" class="p-button-success mr-2" routerLink="/pages/business/new"></button>
+                            <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProspects()" [disabled]="!selectedProspects || !selectedProspects.length"></button>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="center">
+                        <div class="flex justify-center items-center w-full md:w-auto my-2 md:my-0">
+                            <app-prospect-status-filter (statusChange)="onStatusChange($event)" style="padding-top: 0.8rem;"></app-prospect-status-filter>
+                        </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="right">
+
+                        <div class="flex align-items-center">
+                            <span class="p-input-icon-left mr-2">
+                                <input pInputText type="text" [(ngModel)]="filters.search" (input)="applyFilters()" placeholder="Rechercher..." />
+                            </span>
+                            <p-dropdown [options]="assignedToOptions" [(ngModel)]="filters.assignedTo" (onChange)="applyFilters()" placeholder="Assigné à" [showClear]="true" styleClass="mr-2"></p-dropdown>
+                            <button pButton pRipple type="button" icon="pi pi-filter-slash" (click)="clearFilters()" class="p-button-outlined"></button>
+                        </div>
+
+                    </ng-template>
+            </p-toolbar>
+
+
+
+
+
+            <p-table
+                #dt
+                [value]="prospects"
+                [rows]="10"
+                [paginator]="true"
+                [globalFilterFields]="['firstName', 'lastName', 'company', 'email', 'phone']"
+                [(selection)]="selectedProspects"
+                [rowHover]="true"
+                dataKey="id"
+                [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[10, 25, 50]"
+                [loading]="loading"
+                currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} prospects"
+                [filterDelay]="0"
+                [resizableColumns]="true"
+                styleClass="p-datatable-gridlines">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="company" style="min-width: 14rem">Entreprise <p-sortIcon field="company"></p-sortIcon></th>
+                        <th pSortableColumn="lastName" style="min-width: 14rem">Contact <p-sortIcon field="lastName"></p-sortIcon></th>
+                        <th pSortableColumn="email" style="min-width: 10rem">Email <p-sortIcon field="email"></p-sortIcon></th>
+                        <th pSortableColumn="status" style="min-width: 10rem">Statut <p-sortIcon field="status"></p-sortIcon></th>
+                        <th pSortableColumn="rating" style="min-width: 10rem">Évaluation <p-sortIcon field="rating"></p-sortIcon></th>
+                        <th pSortableColumn="lastContact" style="min-width: 10rem">Dernier contact <p-sortIcon field="lastContact"></p-sortIcon></th>
+                        <th style="min-width: 10rem">Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-prospect>
+                    <tr>
+                        <td>
+                            <p-tableCheckbox [value]="prospect"></p-tableCheckbox>
+                        </td>
+                        <td>
+                            <span class="p-column-title">Entreprise</span>
+                            {{ prospect.company }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Contact</span>
+                            {{ prospect.firstName }} {{ prospect.lastName }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Email</span>
+                            {{ prospect.email }}
+                        </td>
+                        <td>
+                            <span class="p-column-title">Statut</span>
+                            <p-tag [value]="getStatusLabel(prospect.status || '')" [severity]="getStatusSeverity(prospect.status || '')"></p-tag>
+                        </td>
+                        <td>
+                            <span class="p-column-title">Évaluation</span>
+                            <p-rating [ngModel]="prospect.rating" [readonly]="true" [cancelable]="false"></p-rating>
+                        </td>
+                        <td>
+                            <span class="p-column-title">Dernier contact</span>
+                            {{ prospect.lastContact | date:'dd/MM/yyyy' }}
+                        </td>
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-info mr-2" [routerLink]="['/pages/business', prospect.id]"></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/pages/business', prospect.id, 'edit']"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteProspect(prospect)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">Aucun prospect trouvé.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

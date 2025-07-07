@@ -1,0 +1,24 @@
+<div *ngIf="application">
+    <p-timeline [value]="application.history" styleClass="application-timeline">
+        <ng-template pTemplate="content" let-event>
+            <div class="timeline-event">
+                <div class="event-header">
+                    <p-tag [value]="getStatusLabel(event.status)" [severity]="getSeverity(event.status)"></p-tag>
+                    <span class="event-date">{{ event.date | date:'dd/MM/yyyy' }}</span>
+                </div>
+                <div class="event-notes">
+                    {{ event.notes }}
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="opposite" let-event>
+            <div class="timeline-opposite">
+                {{ event.date | date:'HH:mm' }}
+            </div>
+        </ng-template>
+    </p-timeline>
+</div>
+
+<div *ngIf="!application || !application.history || application.history.length === 0" class="no-history">
+    <p>Aucun historique disponible pour cette candidature.</p>
+</div>

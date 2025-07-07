@@ -1,0 +1,28 @@
+.prospect-form {
+  .p-inputtext, .p-dropdown, .p-calendar, .p-inputnumber, .p-chips {
+    width: 100%;
+  }
+  
+  .p-field {
+    margin-bottom: 1.5rem;
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    small.p-error {
+      color: var(--red-500);
+      margin-top: 0.25rem;
+      display: block;
+    }
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+}

@@ -1,0 +1,18 @@
+<div class="assignment-form">
+    <h5>Assigner le prospect</h5>
+    
+    <form [formGroup]="assignmentForm" (ngSubmit)="onSubmit()">
+        <div class="field">
+            <label for="assignedTo">Assigner à*</label>
+            <p-dropdown id="assignedTo" formControlName="assignedTo" [options]="users" optionLabel="label" optionValue="value" placeholder="Sélectionner un utilisateur" [style]="{'width':'100%'}"></p-dropdown>
+            <small *ngIf="submitted && assignmentForm.controls['assignedTo'].errors?.['required']" class="p-error">L'assignation est requise.</small>
+        </div>
+        
+        <div class="form-actions">
+            <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-outlined p-button-secondary mr-2" type="button" (click)="onCancel()"></button>
+            <button pButton pRipple label="Assigner" icon="pi pi-check" type="submit"></button>
+        </div>
+    </form>
+</div>
+
+<p-toast></p-toast>

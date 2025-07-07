@@ -1,0 +1,125 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div *ngIf="loading" class="flex justify-content-center">
+                <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+            </div>
+            
+            <div *ngIf="!loading" class="application-detail">
+                <div class="flex flex-column md:flex-row">
+                    <div class="md:w-4 p-3">
+                        <div class="application-info-card">
+                            <div class="application-header mb-4">
+                                <h2 class="m-0">{{ application.jobTitle }}</h2>
+                                <p-tag [value]="getStatusLabel(application.status || '')" 
+                                       [severity]="getSeverity(application.status || '')">
+                                </p-tag>
+                            </div>
+                            
+                            <div class="application-info">
+                                <div class="info-item">
+                                    <span class="info-label">Date de candidature:</span>
+                                    <span class="info-value">{{ application.appliedDate | date:'dd/MM/yyyy' }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">ID du poste:</span>
+                                    <span class="info-value">{{ application.jobId || 'Non spécifié' }}</span>
+                                </div>
+                                <div class="info-item" *ngIf="application.interviewDate">
+                                    <span class="info-label">Date d'entretien:</span>
+                                    <span class="info-value">{{ application.interviewDate | date:'dd/MM/yyyy' }}</span>
+                                </div>
+                                <div class="info-item" *ngIf="application.offerStatus">
+                                    <span class="info-label">Statut de l'offre:</span>
+                                    <span class="info-value">{{ getOfferStatusLabel(application.offerStatus) }}</span>
+                                </div>
+                                <div class="info-item" *ngIf="application.offerDate">
+                                    <span class="info-label">Date de l'offre:</span>
+                                    <span class="info-value">{{ application.offerDate | date:'dd/MM/yyyy' }}</span>
+                                </div>
+                                <div class="info-item" *ngIf="application.salary">
+                                    <span class="info-label">Salaire proposé:</span>
+                                    <span class="info-value">{{ application.salary | currency:'EUR':'symbol':'1.0-0':'fr' }}</span>
+                                </div>
+                                <div class="info-item" *ngIf="application.startDate">
+                                    <span class="info-label">Date de début:</span>
+                                    <span class="info-value">{{ application.startDate | date:'dd/MM/yyyy' }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="application-actions mt-4">
+                                <button pButton pRipple label="Modifier" icon="pi pi-pencil" class="p-button-outlined mr-2" 
+                                        [routerLink]="['/pages/candidate/applications', application.id, 'edit']"></button>
+                                <button pButton pRipple label="Retour à la liste" icon="pi pi-arrow-left" class="p-button-secondary" 
+                                        [routerLink]="['/pages/candidate/applications']"></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-8 p-3">
+                        <p-tabView>
+                            <p-tabPanel header="Détails">
+                                <div class="grid">
+                                    <div class="col-12 md:col-6">
+                                        <div class="card">
+                                            <h5>Notes d'entretien</h5>
+                                            <p>{{ application.interviewNotes || 'Aucune note d\'entretien' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 md:col-6">
+                                        <div class="card">
+                                            <h5>Feedback</h5>
+                                            <p>{{ application.feedback || 'Aucun feedback' }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <h5>Historique de la candidature</h5>
+                                            <p-timeline [value]="application.history" styleClass="application-timeline">
+                                                <ng-template pTemplate="content" let-event>
+                                                    <div class="timeline-event">
+                                                        <div class="event-header">
+                                                            <p-tag [value]="getStatusLabel(event.status)" [severity]="getSeverity(event.status)"></p-tag>
+                                                            <span class="event-date">{{ event.date | date:'dd/MM/yyyy' }}</span>
+                                                        </div>
+                                                        <div class="event-notes">
+                                                            {{ event.notes }}
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                                <ng-template pTemplate="opposite" let-event>
+                                                    <div class="timeline-opposite">
+                                                        {{ event.date | date:'HH:mm' }}
+                                                    </div>
+                                                </ng-template>
+                                            </p-timeline>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                            
+                            <p-tabPanel header="Documents">
+                                <div *ngIf="!application.documents || application.documents.length === 0" class="empty-documents">
+                                    <p>Aucun document associé à cette candidature.</p>
+                                </div>
+                                
+                                <div *ngIf="application.documents && application.documents.length > 0" class="documents-list">
+                                    <div *ngFor="let document of application.documents" class="document-item p-3 mb-3">
+                                        <div class="flex align-items-center">
+                                            <i class="pi pi-file mr-3" style="font-size: 2rem"></i>
+                                            <div>
+                                                <h5 class="m-0">{{ document }}</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                        </p-tabView>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>

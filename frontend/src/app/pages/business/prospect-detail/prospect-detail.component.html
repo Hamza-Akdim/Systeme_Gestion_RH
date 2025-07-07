@@ -1,0 +1,121 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div *ngIf="loading" class="flex justify-content-center">
+                <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+            </div>
+
+            <div *ngIf="!loading" class="prospect-detail">
+                <div class="flex flex-column md:flex-row">
+                    <div class="md:w-4 p-3">
+                        <div class="prospect-info-card">
+                            <div class="prospect-header mb-4">
+                                <h2 class="m-0">{{ prospect.firstName }} {{ prospect.lastName }}</h2>
+                                <p-tag [value]="getStatusLabel(prospect.status || '')"
+                                       [severity]="getStatusSeverity(prospect.status || '')">
+                                </p-tag>
+                            </div>
+
+                            <div class="prospect-company mb-3">
+                                <h3>{{ prospect.company }}</h3>
+                                <p>{{ prospect.position }}</p>
+                            </div>
+
+                            <div class="prospect-rating mb-3">
+                                <label>Évaluation</label>
+                                <p-rating [ngModel]="prospect.rating" [readonly]="true" [cancelable]="false"></p-rating>
+                            </div>
+
+                            <div class="prospect-info">
+                                <div class="info-item">
+                                    <span class="info-label">Email:</span>
+                                    <span class="info-value">{{ prospect.email }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Téléphone:</span>
+                                    <span class="info-value">{{ prospect.phone }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Adresse:</span>
+                                    <span class="info-value">{{ prospect.address }}, {{ prospect.postalCode }} {{ prospect.city }}, {{ prospect.country }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Source:</span>
+                                    <span class="info-value">{{ getSourceLabel(prospect.source || '') }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Assigné à:</span>
+                                    <span class="info-value">{{ prospect.assignedTo }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Dernier contact:</span>
+                                    <span class="info-value">{{ prospect.lastContact | date:'dd/MM/yyyy' }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Prochain contact:</span>
+                                    <span class="info-value">{{ prospect.nextContact | date:'dd/MM/yyyy' }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Budget:</span>
+                                    <span class="info-value">{{ prospect.budget | currency:'EUR':'symbol':'1.0-0':'fr' }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Opportunité:</span>
+                                    <span class="info-value">{{ prospect.opportunity ? (prospect.opportunity * 100 | number:'1.0-0') + '%' : 'Non définie' }}</span>
+                                </div>
+                            </div>
+
+                            <div class="prospect-tags mt-3" *ngIf="prospect.tags && prospect.tags.length > 0">
+                                <label>Tags</label>
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    <p-tag *ngFor="let tag of prospect.tags" [value]="tag"></p-tag>
+                                </div>
+                            </div>
+
+                            <div class="prospect-actions mt-4">
+                                <button pButton pRipple label="Modifier" icon="pi pi-pencil" class="p-button-outlined mr-2"
+                                        [routerLink]="['/pages/business', prospect.id, 'edit']"></button>
+                                <button pButton pRipple label="Supprimer" icon="pi pi-trash" class="p-button-danger mr-2"
+                                        (click)="deleteProspect()"></button>
+                                <button pButton pRipple label="Retour à la liste" icon="pi pi-arrow-left" class="p-button-secondary"
+                                        [routerLink]="['/pages/business']"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:w-8 p-3">
+                        <p-tabView>
+                            <p-tabPanel header="Notes">
+                                <div class="notes-container p-3">
+                                    <h5>Notes</h5>
+                                    <p>{{ prospect.notes || 'Aucune note disponible.' }}</p>
+                                </div>
+                            </p-tabPanel>
+
+                            <p-tabPanel header="Enquêtes">
+                                <div class="surveys-container p-3">
+                                    <div *ngIf="survey.length === 0" class="empty-survey">
+                                    <p>Aucune Enquête associée.</p>
+                                    <button pButton pRipple label="Créer une enquête" icon="pi pi-plus"
+                                            [routerLink]="['/pages/business/surveys/new']"></button>
+                                </div>
+                                </div>
+
+                            </p-tabPanel>
+
+                            <p-tabPanel header="Historique">
+                                <div class="history-container p-3">
+                                    <h5>Historique des interactions</h5>
+                                    <p>Fonctionnalité en cours de développement.</p>
+                                </div>
+                            </p-tabPanel>
+                        </p-tabView>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

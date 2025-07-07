@@ -1,0 +1,128 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+
+
+            <div class="text-center mb-5" style="padding-bottom: 1rem;">
+                <div class="text-900 text-3xl font-medium mb-3">{{ isEditMode ? 'Modifier le prospect' : 'Nouveau prospect' }}</div>
+            </div>
+
+            <form [formGroup]="prospectForm" (ngSubmit)="onSubmit()">
+                <div class="card flex flex-col gap-4">
+                    <div class="flex flex-col gap-2">
+                        <label for="firstName">Prénom*</label>
+                        <input pInputText id="firstName" formControlName="firstName" />
+                        <small *ngIf="submitted && prospectForm.controls['firstName'].errors?.['required']" class="p-error">Le prénom est requis.</small>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="lastName">Nom*</label>
+                        <input pInputText id="lastName" formControlName="lastName" />
+                        <small *ngIf="submitted && prospectForm.controls['lastName'].errors?.['required']" class="p-error">Le nom est requis.</small>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="company">Entreprise*</label>
+                        <input pInputText id="company" formControlName="company" />
+                        <small *ngIf="submitted && prospectForm.controls['company'].errors?.['required']" class="p-error">L'entreprise est requise.</small>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="position">Poste</label>
+                        <input pInputText id="position" formControlName="position" />
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="email">Email*</label>
+                        <input pInputText id="email" formControlName="email" />
+                        <small *ngIf="submitted && prospectForm.controls['email'].errors?.['required']" class="p-error">L'email est requis.</small>
+                        <small *ngIf="submitted && prospectForm.controls['email'].errors?.['email']" class="p-error">L'email n'est pas valide.</small>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="phone">Téléphone</label>
+                        <input pInputText id="phone" formControlName="phone" />
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="address">Adresse</label>
+                        <input pInputText id="address" formControlName="address" />
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-4">
+                        <label for="city">Ville</label>
+                        <input pInputText id="city" formControlName="city" />
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-4">
+                        <label for="postalCode">Code postal</label>
+                        <input pInputText id="postalCode" formControlName="postalCode" />
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-4">
+                        <label for="country">Pays</label>
+                        <input pInputText id="country" formControlName="country" />
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-6">
+                        <label for="status">Statut*</label>
+                        <p-dropdown id="status" formControlName="status" [options]="statuses" optionLabel="label" optionValue="value" placeholder="Sélectionner un statut"></p-dropdown>
+                        <small *ngIf="submitted && prospectForm.controls['status'].errors?.['required']" class="p-error">Le statut est requis.</small>
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-6">
+                        <label for="source">Source</label>
+                        <p-dropdown id="source" formControlName="source" [options]="sources" optionLabel="label" optionValue="value" placeholder="Sélectionner une source"></p-dropdown>
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-6">
+                        <label for="assignedTo">Assigné à</label>
+                        <input pInputText id="assignedTo" formControlName="assignedTo" />
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-6">
+                        <label for="rating">Évaluation</label>
+                        <p-rating id="rating" formControlName="rating" [cancelable]="false"></p-rating>
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-6">
+                        <label for="lastContact">Dernier contact</label>
+                        <p-calendar id="lastContact" formControlName="lastContact" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-6">
+                        <label for="nextContact">Prochain contact</label>
+                        <p-calendar id="nextContact" formControlName="nextContact" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-6">
+                        <label for="budget">Budget</label>
+                        <p-inputNumber id="budget" formControlName="budget" mode="currency" currency="EUR" locale="fr-FR"></p-inputNumber>
+                    </div>
+
+                    <div class="flex flex-col gap-2 md:col-6">
+                        <label for="opportunity">Opportunité (%)</label>
+                        <p-inputNumber id="opportunity" formControlName="opportunity" [min]="0" [max]="1" [step]="0.1" [showButtons]="true" suffix="%" [minFractionDigits]="0" [maxFractionDigits]="0" [useGrouping]="false"></p-inputNumber>
+                    </div>
+
+                    <div class="flex flex-col gap-2 col-12">
+                        <label for="tags">Tags</label>
+                        <p-chips id="tags" formControlName="tags" separator="," placeholder="Entrez des tags"></p-chips>
+                    </div>
+
+                    <div class="flex flex-col gap-2 col-12">
+                        <label for="notes">Notes</label>
+                        <textarea pInputTextarea id="notes" formControlName="notes" rows="5"></textarea>
+                    </div>
+
+                    <div class="field col-12 text-center mb-5" style="padding-top: 2rem;">
+                        <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-outlined p-button-secondary mr-2" type="button" (click)="onCancel()"></button>
+                        <button pButton pRipple label="Enregistrer" icon="pi pi-check" type="submit"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>

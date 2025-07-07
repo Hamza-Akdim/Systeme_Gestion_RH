@@ -1,0 +1,114 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div class="text-center mb-5" style="padding-bottom: 1rem;">
+                <div class="text-900 text-3xl font-medium mb-3">{{ isEditMode ? 'Modifier la candidature' : 'Nouvelle candidature' }}</div>
+            </div>
+
+            
+            <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+                <div class="card flex flex-col gap-4">
+                    <div class="flex flex-col gap-2">
+                        <label for="candidateId">Candidat*</label>
+                        <p-dropdown id="candidateId" formControlName="candidateId" 
+                                   [options]="candidates" 
+                                   optionLabel="firstName" 
+                                   optionValue="id"
+                                   placeholder="Sélectionner un candidat"
+                                   [filter]="true" 
+                                   filterBy="firstName,lastName">
+                            <ng-template pTemplate="selectedItem">
+                                <div *ngIf="applicationForm.value.candidateId">
+                                    {{ getCandidateLabel(applicationForm.value.candidateId) }}
+                                </div>
+                            </ng-template>
+                            <ng-template let-candidate pTemplate="item">
+                                <div>{{ candidate.firstName }} {{ candidate.lastName }}</div>
+                            </ng-template>
+                        </p-dropdown>
+                        <small *ngIf="submitted && applicationForm.controls['candidateId'].errors?.['required']" class="p-error">Le candidat est requis.</small>
+                    </div>
+                    
+                    <div class="flex flex-col gap-2">
+                        <label for="jobTitle">Intitulé du poste*</label>
+                        <input pInputText id="jobTitle" formControlName="jobTitle" />
+                        <small *ngIf="submitted && applicationForm.controls['jobTitle'].errors?.['required']" class="p-error">L'intitulé du poste est requis.</small>
+                    </div>
+                    
+                    <div class="flex flex-col gap-2">
+                        <label for="jobId">ID du poste</label>
+                        <input pInputText id="jobId" formControlName="jobId" />
+                    </div>
+                    
+                    <div class="flex flex-col gap-2">
+                        <label for="status">Statut*</label>
+                        <p-dropdown id="status" formControlName="status" [options]="statuses" optionLabel="label" optionValue="value" placeholder="Sélectionner un statut"></p-dropdown>
+                        <small *ngIf="submitted && applicationForm.controls['status'].errors?.['required']" class="p-error">Le statut est requis.</small>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-2">
+                        <div class="flex flex-col grow basis-0" >
+                            <label for="interviewDate">Date d'entretien</label>
+                            <p-calendar id="interviewDate" formControlName="interviewDate" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                        </div>
+
+                        <div class="flex flex-col grow basis-0" style="margin-left: -25rem;">
+                            <label for="meetingLink">Lien de réunion</label>
+                            <input pInputText id="meetingLink" formControlName="meetingLink" />
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="interviewNotes">Notes d'entretien</label>
+                        <textarea pInputTextarea id="interviewNotes" formControlName="interviewNotes" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="flex flex-col gap-2">
+                        <label for="feedback">Feedback</label>
+                        <textarea pInputTextarea id="feedback" formControlName="feedback" rows="3"></textarea>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="rating">Évaluation</label>
+                        <p-rating id="rating" formControlName="rating" [cancel]="false"></p-rating>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label for="salary">Salaire proposé</label>
+                        <p-inputNumber id="salary" formControlName="salary" mode="currency" currency="EUR" locale="fr-FR"></p-inputNumber>
+                    </div>
+                    
+                    <div class="flex flex-col gap-2">
+                        <label for="offerStatus">Statut de l'offre</label>
+                        <p-dropdown id="offerStatus" formControlName="offerStatus" [options]="offerStatuses" optionLabel="label" optionValue="value" placeholder="Sélectionner un statut"></p-dropdown>
+                    </div>
+
+                  
+                        <div class="flex flex-wrap gap-5 text-center mb-5">
+                            <div class="flex flex-col grow basis-0 gap-4">
+                                <label for="offerDate">Date de début de l'offre</label>
+                                <p-calendar id="offerDateStart" formControlName="offerDateStart" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                            </div>
+                            <div class="flex flex-col grow basis-0 gap-4">
+                                <label for="offerDate">Date de fin de l'offre</label>
+                                <p-calendar id="offerDateEnd" formControlName="offerDateEnd" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                            </div>
+                            <div class="flex flex-col grow basis-0 gap-4">
+                                <label for="startDate">Date de début prévus</label>
+                                <p-calendar id="startDate" formControlName="startDate" [showIcon]="true" dateFormat="dd/mm/yy"></p-calendar>
+                            </div>
+                        </div>
+                    
+
+
+                    <div class="field col-12 text-center mb-5" style="padding-top: 2rem;">
+                        <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-outlined p-button-secondary mr-2" type="button" (click)="onCancel()"></button>
+                        <button pButton pRipple label="Enregistrer" icon="pi pi-check" type="submit"></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<p-toast></p-toast>

@@ -1,0 +1,57 @@
+<div class="login-wrapper">
+  <div class="w-6/12 h-screen hidden md:block flex-shrink-0 login-left"></div>
+  <div class="w-full login-right">
+    <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+        <div class="flex flex-column align-items-center justify-content-center">
+            <div style="border-radius:56px; padding:3rem; ">
+                <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+                    <div class="text-center mb-5">
+                        <div class="text-900 text-3xl font-medium mb-3">Bienvenue sur TalentWave</div>
+                        <span class="text-600 font-medium">Connectez-vous pour continuer</span>
+                    </div>
+
+                    <div>
+                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                            <div class="mb-5" style="padding-top: 2rem;">
+                                <label for="email" class="block text-900 text-xl font-medium mb-2 ">Email</label>
+                                <input id="email" type="text" placeholder="Adresse email" pInputText formControlName="email" class="w-full md:w-30rem" style="padding:1rem">
+                                <small *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="p-error block mt-2">
+                                    Email invalide
+                                </small>
+                            </div>
+
+                            <div class="mb-5" style="padding-top: 1.5rem;">
+                                <div class="flex align-items-center justify-content-between mb-2">
+                                    <label for="password" class="text-900 text-xl font-medium">Mot de passe</label>
+                                </div>
+                                <p-password id="password" formControlName="password" [toggleMask]="true" placeholder="Mot de passe" styleClass="w-full" [style]="{'height':'3.5rem'}" [inputStyle]="{'height':'3.5rem'}"></p-password>
+                                <a [routerLink]="['/auth/forgotpassword']" class="font-medium no-underline ml-2 text-right cursor-pointer" style="padding-top: 1.5rem; color: var(--primary-color)">Mot de passe oublié ?</a>
+                                <small *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="p-error block mt-2">
+                                    Mot de passe requis
+                                </small>
+                            </div>
+
+                            <div class="flex align-items-center justify-content-between mb-5 gap-5" style="padding-top: 1.5rem; padding-bottom: 1.5rem;">
+                                <div class="flex align-items-center">
+                                    <p-checkbox id="rememberme" [binary]="true" formControlName="rememberMe" styleClass="mr-2"></p-checkbox>
+                                    <label for="rememberme">Se souvenir de moi</label>
+                                </div>
+                            </div>
+
+                            <button pButton pRipple label="Se connecter" class="w-full p-3 text-xl" [disabled]="loginForm.invalid || isLoading" type="submit">
+                                <i *ngIf="isLoading" class="pi pi-spin pi-spinner mr-2"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="flex align-items-center justify-content-center mt-5 gap-5" style="padding-top: 0.5rem;">
+                        <p>Vous n'avez pas de compte ? &nbsp;</p>
+                        <a [routerLink]="['/auth/register']" class="font-medium no-underline" style="color: var(--primary-color)"> Créer un compte</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+

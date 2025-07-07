@@ -1,0 +1,136 @@
+.survey-detail {
+  .survey-info-card {
+    background-color: var(--surface-card);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    .survey-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      h2 {
+        font-weight: 700;
+        color: var(--text-color);
+      }
+    }
+    
+    .survey-description {
+      p {
+        margin: 0;
+        color: var(--text-color-secondary);
+      }
+    }
+    
+    .survey-info {
+      margin-top: 1.5rem;
+      
+      .info-item {
+        margin-bottom: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        
+        .info-label {
+          font-weight: 600;
+          color: var(--text-color-secondary);
+          margin-bottom: 0.25rem;
+        }
+        
+        .info-value {
+          color: var(--text-color);
+        }
+      }
+    }
+    
+    .survey-tags {
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--text-color-secondary);
+      }
+    }
+    
+    .survey-stats {
+      .stat-card {
+        background-color: var(--surface-hover);
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+        
+        .stat-value {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--primary-color);
+        }
+        
+        .stat-label {
+          font-size: 0.875rem;
+          color: var(--text-color-secondary);
+          margin-top: 0.25rem;
+        }
+      }
+    }
+    
+    .survey-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+  }
+  
+  .questions-container, .responses-container, .statistics-container {
+    h5 {
+      margin-top: 0;
+      color: var(--text-color);
+      font-weight: 600;
+    }
+    
+    .empty-questions, .empty-responses, .empty-statistics {
+      font-style: italic;
+      color: var(--text-color-secondary);
+      padding: 1rem 0;
+    }
+    
+    .question-item {
+      background-color: var(--surface-card);
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      
+      .question-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        h6 {
+          font-weight: 600;
+        }
+      }
+      
+      .question-details {
+        .question-required {
+          font-size: 0.875rem;
+          color: var(--text-color-secondary);
+        }
+        
+        .question-options {
+          .options-label {
+            font-weight: 600;
+            color: var(--text-color-secondary);
+          }
+          
+          ul {
+            margin: 0.5rem 0 0 1.5rem;
+            padding: 0;
+            
+            li {
+              margin-bottom: 0.25rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

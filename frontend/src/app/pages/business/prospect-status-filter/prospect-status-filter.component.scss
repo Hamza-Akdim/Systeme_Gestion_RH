@@ -1,0 +1,13 @@
+.status-filter {
+    display: flex;
+    justify-content: flex-start;
+    
+    .p-selectbutton {
+        .p-button {
+            &.p-highlight {
+                background-color: var(--primary-color);
+                border-color: var(--primary-color);
+            }
+        }
+    }
+}

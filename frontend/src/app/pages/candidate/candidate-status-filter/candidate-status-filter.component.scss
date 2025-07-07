@@ -1,0 +1,26 @@
+.status-filter {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    
+    .p-selectbutton {
+        .p-button {
+            background: var(--surface-card);
+            border: 1px solid var(--surface-border);
+            color: var(--text-color);
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+            
+            &:not(.p-highlight):hover {
+                background: var(--surface-hover);
+                border-color: var(--primary-color);
+                color: var(--primary-color);
+            }
+            
+            &.p-highlight {
+                background: var(--primary-color);
+                border-color: var(--primary-color);
+                color: var(--primary-color-text);
+            }
+        }
+    }
+}

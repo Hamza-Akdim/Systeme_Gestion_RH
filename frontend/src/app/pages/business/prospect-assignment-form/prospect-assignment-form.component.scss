@@ -1,0 +1,31 @@
+.assignment-form {
+  padding: 1rem;
+  
+  h5 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  
+  .field {
+    margin-bottom: 1.5rem;
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    
+    small.p-error {
+      color: var(--red-500);
+      margin-top: 0.25rem;
+      display: block;
+    }
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+}

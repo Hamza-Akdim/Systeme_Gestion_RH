@@ -1,0 +1,19 @@
+.dashboard-container {
+    .chart-container {
+        height: 300px;
+        margin-bottom: 1rem;
+        
+        @media screen and (max-width: 768px) {
+            height: 250px;
+        }
+    }
+    
+    .p-card {
+        height: 100%;
+        
+        .p-card-content {
+            padding: 0;
+            height: 100%;
+        }
+    }
+}

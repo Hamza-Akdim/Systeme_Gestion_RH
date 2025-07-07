@@ -1,0 +1,55 @@
+.survey-list-container {
+  .p-datatable {
+    .p-datatable-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .p-column-title {
+      font-weight: 600;
+    }
+  }
+  
+  .filter-container {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .status-badge {
+    border-radius: 2px;
+    padding: 0.25rem 0.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.3px;
+    
+    &.status-active {
+      background-color: #C8E6C9;
+      color: #256029;
+    }
+    
+    &.status-draft {
+      background-color: #FEEDAF;
+      color: #8A5340;
+    }
+    
+    &.status-completed {
+      background-color: #B3E5FC;
+      color: #23547B;
+    }
+    
+    &.status-archived {
+      background-color: #ECCFFF;
+      color: #694382;
+    }
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+}

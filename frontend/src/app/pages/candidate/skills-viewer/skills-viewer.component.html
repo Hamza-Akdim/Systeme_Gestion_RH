@@ -1,0 +1,12 @@
+<div class="skills-container">
+    <div *ngIf="!skills || skills.length === 0" class="no-skills">
+        <p>Aucune compétence renseignée</p>
+    </div>
+    
+    <div *ngIf="skills && skills.length > 0" class="skills-list">
+        <p-chip *ngFor="let skill of skills" 
+                [label]="skill" 
+                styleClass="skill-chip">
+        </p-chip>
+    </div>
+</div>

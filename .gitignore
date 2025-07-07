@@ -1,0 +1,37 @@
+# === Global ===
+node_modules/
+dist/
+build/
+.DS_Store
+Thumbs.db
+.env
+*.log
+
+# === Frontend (Angular) ===
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/cache/
+frontend/.angular/
+frontend/.env
+
+# IDE files
+frontend/.vscode/
+frontend/.idea/
+
+# === Backend (Spring Boot) ===
+backend/target/
+backend/.classpath
+backend/.project
+backend/.settings/
+backend/.env
+
+# IDE files
+backend/.idea/
+backend/.vscode/
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+
+# Logs
+backend/*.log
+
