@@ -95,7 +95,7 @@ public class ConsultantChecklistServiceImpl implements ConsultantChecklistServic
     @Transactional(readOnly = true)
     public List<ConsultantChecklistDTO> findAllByConsultantId(Long consultantId) {
         log.debug("Request to get all ConsultantChecklists for Consultant ID: {}", consultantId);
-        return consultantChecklistRepository.findByConsultantId(consultantId).stream()
+        return consultantChecklistRepository.findByConsultant_Id(consultantId).stream()
             .map(this::toDto)
             .collect(Collectors.toList());
     }

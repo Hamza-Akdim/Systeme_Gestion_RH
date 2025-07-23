@@ -17,11 +17,6 @@ export const appRoutes: Routes = [
                 loadChildren: () => import('@/pages/uikit/uikit.routes')
             },
             {
-                path: 'documentation',
-                data: { breadcrumb: 'Documentation' },
-                loadComponent: () => import('@/pages/documentation/documentation').then((c) => c.Documentation)
-            },
-            {
                 path: 'pages',
                 data: { breadcrumb: 'Pages' },
                 loadChildren: () => import('@/pages/pages.routes')
@@ -30,11 +25,6 @@ export const appRoutes: Routes = [
                 path: 'apps',
                 data: { breadcrumb: 'Apps' },
                 loadChildren: () => import('./app/apps/apps.routes')
-            },
-            {
-                path: 'ecommerce',
-                data: { breadcrumb: 'E-Commerce' },
-                loadChildren: () => import('@/pages/ecommerce/ecommerce.routes')
             },
             {
                 path: 'blocks',

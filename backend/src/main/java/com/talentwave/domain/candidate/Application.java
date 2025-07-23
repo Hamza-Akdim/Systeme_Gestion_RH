@@ -3,6 +3,7 @@ package com.talentwave.domain.candidate;
 import com.talentwave.domain.sourcing.JobOffer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,8 @@ import java.time.LocalDate;
 @Table(name = "application")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

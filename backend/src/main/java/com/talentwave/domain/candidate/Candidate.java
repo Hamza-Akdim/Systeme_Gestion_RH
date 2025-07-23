@@ -1,5 +1,6 @@
 package com.talentwave.domain.candidate;
 
+import com.talentwave.domain.profilCV.LangueConsultant;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import lombok.Setter;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "candidate")
@@ -45,6 +47,9 @@ public class Candidate {
     private String coverLetterText;
 
     private String linkedInProfileUrl;
+
+    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<LangueConsultant> langueConsultants;
 
     // Consider adding fields like currentSalary, expectedSalary, availabilityDate, etc.
     // Also, a relationship to Skills entity might be useful.

@@ -8,9 +8,13 @@ import java.util.List;
 
 @Repository
 public interface ConsultantChecklistRepository extends JpaRepository<ConsultantChecklist, Long> {
-    List<ConsultantChecklist> findByConsultantId(Long consultantId);
-    List<ConsultantChecklist> findByOnboardingStepId(Long onboardingStepId);
-    List<ConsultantChecklist> findByConsultantIdAndOnboardingStepId(Long consultantId, Long onboardingStepId);
-    List<ConsultantChecklist> findByConsultantIdAndCompleted(Long consultantId, boolean completed);
+
+    List<ConsultantChecklist> findByConsultant_Id(Long consultantId);
+
+    List<ConsultantChecklist> findByOnboardingStep_Id(Long onboardingStepId);
+
+    List<ConsultantChecklist> findByConsultant_IdAndOnboardingStep_Id(Long consultantId, Long onboardingStepId);
+
+    List<ConsultantChecklist> findByConsultant_IdAndCompleted(Long consultantId, boolean completed);
 }
 

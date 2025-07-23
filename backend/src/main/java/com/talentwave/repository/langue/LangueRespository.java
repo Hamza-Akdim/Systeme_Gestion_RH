@@ -1,4 +1,7 @@
 package com.talentwave.repository.langue;
 
-public interface LangueRespository {
+import com.talentwave.domain.langue.Langue;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LangueRespository extends JpaRepository<Langue,Long> {
 }
