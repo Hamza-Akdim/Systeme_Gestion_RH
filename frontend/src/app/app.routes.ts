@@ -4,7 +4,7 @@ import { AuthGuard } from '../core/services/auth.guard';
 export const APP_ROUTES: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/dashboard/dashboard.routes').then(m => m.DASHBOARD_ROUTES),
+    loadComponent: () => import('./pages/offres/OffresDashboard').then(m => m.OffresDashboard),
     canActivate: [AuthGuard]
   },
   {

@@ -126,8 +126,7 @@ export class AppLayout implements OnDestroy {
         const layoutState = this.layoutService.layoutState();
 
         return {
-            'layout-light': !layoutConfig.darkTheme,
-            'layout-dark': layoutConfig.darkTheme,
+
             'layout-overlay': layoutConfig.menuMode === 'overlay',
             'layout-static': layoutConfig.menuMode === 'static',
             'layout-slim': layoutConfig.menuMode === 'slim',

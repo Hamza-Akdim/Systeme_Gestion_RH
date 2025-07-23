@@ -1,7 +1,7 @@
-import {Component, ElementRef, inject, ViewChild} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {RouterModule} from '@angular/router';
-import {AppMenuitem} from './app.menuitem';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { AppMenuitem } from './app.menuitem';
 
 interface MenuItem {
     label?: string;
@@ -43,7 +43,7 @@ export class AppMenu {
 
     model: MenuItem[] = [
         {
-            label: 'Tableau de bord',
+            label: 'Offres',
             icon: 'pi pi-home',
             items: [
                 {
@@ -108,7 +108,7 @@ export class AppMenu {
         },
         { separator: true },
         {
-            label: 'Candidats',
+            label: 'Candidats/mes Candidatures',
             icon: 'pi pi-user',
             items: [
                 {
@@ -140,7 +140,6 @@ export class AppMenu {
                 }
             ]
         },
-
 
         {
             label: 'Évaluation',
@@ -270,5 +269,5 @@ export class AppMenu {
                 }
             ]
         }
-    ]
+    ];
 }

@@ -8,8 +8,8 @@ export const appRoutes: Routes = [
         children: [
             {
                 path: '',
-                data: { breadcrumb: 'E-Commerce Dashboard' },
-                loadComponent: () => import('@/pages/dashboard/ecommercedashboard').then((c) => c.EcommerceDashboard)
+                data: { breadcrumb: 'Offres' },
+                loadComponent: () => import('@/pages/offres/OffresDashboard').then((c) => c.OffresDashboard)
             },
             {
                 path: 'uikit',

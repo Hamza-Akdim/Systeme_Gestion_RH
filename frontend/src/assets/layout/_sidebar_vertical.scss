@@ -95,11 +95,12 @@
         li.active-menuitem {
             background-color: var(--root-menu-item-hover-bg);
             > a {
-                border-left-color: var(--primary-color);
+                border-left-color: #0d6efd;
                 background-color: var(--root-menu-item-hover-bg);
                 .layout-submenu-toggler {
                     transform: rotate(-180deg);
                 }
+
             }
         }
 
@@ -130,8 +131,10 @@
                 }
 
                 &.active-route {
-                    border-left-color: var(--primary-color);
+                    border-left-color: #0d6efd;
                     background-color: var(--root-menu-item-hover-bg);
+
+
                 }
 
                 &:hover {
