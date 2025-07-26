@@ -16,11 +16,6 @@ export default [
         data: { breadcrumb: 'Business' },
         loadChildren: () => import('./business/business.routes')
     },
-    {
-        path: 'candidature',
-        data: { breadcrumb: 'Candidatures' },
-        loadChildren: () => import('./gestion-cv/gestion-cv.routes').then((m) => m.GESTION_CV_ROUTES)
-    },
 
     { path: 'profile', data: { breadcrumb: 'Profile' }, component: ProfileComponent },
     { path: '**', redirectTo: '/notfound' }

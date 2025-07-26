@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'offer-card',
     standalone: true,
     imports: [CommonModule],
     template: `
-        <div class="text-white rounded-2xl p-6 relative shadow-lg border border-white">
+        <div (click)="goToDetail()" class="cursor-pointer text-white rounded-2xl p-6 relative shadow-lg border border-white hover:shadow-xl transition">
             <div class="text-xl font-semibold mb-2">{{ offre.titre }}</div>
 
             <div class="flex items-center text-sm mb-4 gap-4">
@@ -38,4 +39,12 @@ export class OfferCardComponent {
         domaine: string;
         description: string;
     };
+
+    @Input() index!: number;
+
+    constructor(private router: Router) {}
+
+    goToDetail() {
+        this.router.navigate(['/offre', this.index]);
+    }
 }

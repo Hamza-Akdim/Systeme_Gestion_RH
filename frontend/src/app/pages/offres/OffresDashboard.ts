@@ -12,7 +12,7 @@ import { OffresFilterBarComponent } from './components/OffersFilterBarComponent'
             <offres-filter-bar (filtersChanged)="onFiltersChanged($event)"></offres-filter-bar>
 
             <div class="grid grid-cols-1 2xl:grid-cols-2 gap-6">
-                <offer-card *ngFor="let offre of filteredOffres" [offre]="offre" />
+                <offer-card *ngFor="let offre of filteredOffres; let i = index" [offre]="offre" [index]="i" />
             </div>
         </div>
     `
