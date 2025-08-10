@@ -1,6 +1,6 @@
-package com.talentwave.service.sourcing;
+package com.talentwave.service.offre;
 
-import com.talentwave.service.dto.sourcing.JobOfferDTO;
+import com.talentwave.service.dto.offre.JobOfferDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -26,11 +26,11 @@ public interface JobOfferService {
 
     /**
      * Get all the jobOffers.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
+     * @param page
+     * @param size
+     * @return the entity.
      */
-    Page<JobOfferDTO> findAll(Pageable pageable);
+    Page<JobOfferDTO> findAll(int page, int size);
 
     /**
      * Get the "id" jobOffer.

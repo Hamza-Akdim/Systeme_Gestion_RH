@@ -28,19 +28,20 @@ public class JobProfileServiceImpl implements JobProfileService {
 
     @Override
     public JobProfileDTO save(JobProfileDTO jobProfileDTO) {
-        log.debug("Request to save JobProfile : {}", jobProfileDTO);
-        JobProfile jobProfile = toEntity(jobProfileDTO);
-        if (jobProfile.getId() == null) { // New entity
-            jobProfile.setCreatedAt(Instant.now());
-        } else { // Existing entity
-            jobProfile.setUpdatedAt(Instant.now());
-            // Ensure createdAt is preserved if it was already set
-            // Créer une variable finale pour utilisation dans la lambda
-            final JobProfile finalJobProfile = jobProfile;
-            jobProfileRepository.findById(jobProfile.getId()).ifPresent(existing -> finalJobProfile.setCreatedAt(existing.getCreatedAt()));
-        }
-        jobProfile = jobProfileRepository.save(jobProfile);
-        return toDto(jobProfile);
+//        log.debug("Request to save JobProfile : {}", jobProfileDTO);
+//        JobProfile jobProfile = toEntity(jobProfileDTO);
+//        if (jobProfile.getId() == null) { // New entity
+//            jobProfile.setCreatedAt(Instant.now());
+//        } else { // Existing entity
+//            jobProfile.setUpdatedAt(Instant.now());
+//            // Ensure createdAt is preserved if it was already set
+//            // Créer une variable finale pour utilisation dans la lambda
+//            final JobProfile finalJobProfile = jobProfile;
+//            jobProfileRepository.findById(jobProfile.getId()).ifPresent(existing -> finalJobProfile.setCreatedAt(existing.getCreatedAt()));
+//        }
+//        jobProfile = jobProfileRepository.save(jobProfile);
+//        return toDto(jobProfile);
+        return null;
     }
 
     @Override
@@ -51,10 +52,10 @@ public class JobProfileServiceImpl implements JobProfileService {
             .findById(jobProfileDTO.getId())
             .map(existingJobProfile -> {
                 if (jobProfileDTO.getTitle() != null) {
-                    existingJobProfile.setTitle(jobProfileDTO.getTitle());
+//                    existingJobProfile.setTitle(jobProfileDTO.getTitle());
                 }
                 if (jobProfileDTO.getDescription() != null) {
-                    existingJobProfile.setDescription(jobProfileDTO.getDescription());
+//                    existingJobProfile.setDescription(jobProfileDTO.getDescription());
                 }
                 if (jobProfileDTO.getRequirements() != null) {
                     existingJobProfile.setRequirements(jobProfileDTO.getRequirements());
@@ -89,8 +90,8 @@ public class JobProfileServiceImpl implements JobProfileService {
     private JobProfileDTO toDto(JobProfile jobProfile) {
         JobProfileDTO dto = new JobProfileDTO();
         dto.setId(jobProfile.getId());
-        dto.setTitle(jobProfile.getTitle());
-        dto.setDescription(jobProfile.getDescription());
+//        dto.setTitle(jobProfile.getTitle());
+//        dto.setDescription(jobProfile.getDescription());
         dto.setRequirements(jobProfile.getRequirements());
         dto.setCreatedAt(jobProfile.getCreatedAt());
         dto.setUpdatedAt(jobProfile.getUpdatedAt());
@@ -98,17 +99,18 @@ public class JobProfileServiceImpl implements JobProfileService {
     }
 
     private JobProfile toEntity(JobProfileDTO dto) {
-        JobProfile entity = new JobProfile(
-            dto.getTitle(),
-            dto.getDescription(),
-            dto.getRequirements()
-        );
-        entity.setId(dto.getId());
-        entity.setTitle(dto.getTitle());
-        entity.setDescription(dto.getDescription());
-        entity.setRequirements(dto.getRequirements());
-        // createdAt and updatedAt are handled in save/update logic
-        return entity;
+//        JobProfile entity = new JobProfile(
+//            dto.getTitle(),
+//            dto.getDescription(),
+//            dto.getRequirements()
+//        );
+//        entity.setId(dto.getId());
+//        entity.setTitle(dto.getTitle());
+//        entity.setDescription(dto.getDescription());
+//        entity.setRequirements(dto.getRequirements());
+//        // createdAt and updatedAt are handled in save/update logic
+//        return entity;
+        return null;
     }
 }
 

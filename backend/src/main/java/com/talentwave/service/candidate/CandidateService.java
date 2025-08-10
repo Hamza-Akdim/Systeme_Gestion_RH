@@ -1,6 +1,6 @@
 package com.talentwave.service.candidate;
 
-import com.talentwave.service.dto.candidate.CandidateDTO;
+import com.talentwave.service.dto.profilCV.CandidateDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

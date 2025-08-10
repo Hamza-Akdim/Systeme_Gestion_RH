@@ -1,6 +1,6 @@
 package com.talentwave.domain.candidate;
 
-import com.talentwave.domain.sourcing.JobOffer;
+import com.talentwave.domain.offer.JobOffer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  */
 
 @RestController
-@RequestMapping("/api/profil-cv/langue-consultant")
+@RequestMapping("/api/langue-consultant")
 public class LangueConsultantController {
     @Autowired
     LangueConsultantService langueConsultantService;

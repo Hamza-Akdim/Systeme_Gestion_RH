@@ -1,6 +1,7 @@
 package com.talentwave.service.dto.profilCV;
 
 import com.talentwave.domain.enumeration.Level;
+import com.talentwave.domain.langue.Langue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class LangueConsultantDTO {
     private Long idLC;
     private Level level;
-    private Long langue_id;
-    private Long candidate_id;
+    private Langue langue;
+//    private Long candidate_id;
 }

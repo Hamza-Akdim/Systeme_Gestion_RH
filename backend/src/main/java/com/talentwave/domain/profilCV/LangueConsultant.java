@@ -24,11 +24,11 @@ public class LangueConsultant {
     @Enumerated(EnumType.STRING)
     private Level level;
 
-    @ManyToOne
-    @JoinColumn(name = "langue_id", referencedColumnName = "idL", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "langue_id", referencedColumnName = "idL", nullable = false) // referencedColumnName : it makes the mapping explicit and readable. doesn't have any functionality because "idL" is already the primary key which this foreign key is pointing to
     private Langue langue;
 
-    @ManyToOne()
-    @JoinColumn(name = "consultant_id", referencedColumnName = "id", nullable = false)
-    private Candidate candidate;
+//    @ManyToOne()
+//    @JoinColumn(name = "consultant_id", referencedColumnName = "id", nullable = false)
+//    private Candidate candidate;
 }

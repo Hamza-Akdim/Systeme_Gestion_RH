@@ -1,6 +1,7 @@
 package com.talentwave.domain.sourcing;
 
 import com.talentwave.domain.User; // Assuming HR user who performed sourcing
+import com.talentwave.domain.offer.JobOffer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

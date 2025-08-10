@@ -1,0 +1,14 @@
+package com.talentwave.domain.enumeration;
+
+public enum Secteur {
+    SOFTWARE_DEVELOPMENT,
+    IT_MANAGEMENT,
+    DATA_SOLUTIONS,
+    POWER_GENERATION,
+    TELECOMMUNICATIONS,
+    IT_SUPPORT,
+    ENERGY_AUDITS,
+    STAFFING,
+    POWER_SYSTEMS,
+    ENERGY_MANAGEMENT
+}

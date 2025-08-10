@@ -1,10 +1,11 @@
-package com.talentwave.web.rest.sourcing;
+package com.talentwave.web.rest.offre;
 
-import com.talentwave.service.sourcing.JobOfferService;
-import com.talentwave.service.dto.sourcing.JobOfferDTO;
+import com.talentwave.service.offre.JobOfferService;
+import com.talentwave.service.dto.offre.JobOfferDTO;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -16,19 +17,14 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/sourcing/offers")
+@RequestMapping("/api/job-offers")
 public class JobOfferController {
 
-    private final Logger log = LoggerFactory.getLogger(JobOfferController.class);
-
-    private final JobOfferService jobOfferService;
-
-    public JobOfferController(JobOfferService jobOfferService) {
-        this.jobOfferService = jobOfferService;
-    }
+    @Autowired
+    private JobOfferService jobOfferService;
 
     /**
-     * {@code POST  /api/sourcing/offers} : Create a new jobOffer.
+     * {@code POST  /api/job-offers} : Create a new jobOffer.
      *
      * @param jobOfferDTO the jobOfferDTO to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new jobOfferDTO, or with status {@code 400 (Bad Request)} if the jobOffer has already an ID.
@@ -36,10 +32,6 @@ public class JobOfferController {
     @PostMapping
     @PreAuthorize("hasAuthority(\'ADMIN\') or hasAuthority(\'HR\')")
     public ResponseEntity<JobOfferDTO> createJobOffer(@Valid @RequestBody JobOfferDTO jobOfferDTO) {
-        log.debug("REST request to save JobOffer : {}", jobOfferDTO);
-        if (jobOfferDTO.getId() != null) {
-            return ResponseEntity.badRequest().build();
-        }
         JobOfferDTO result = jobOfferService.save(jobOfferDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
@@ -57,7 +49,6 @@ public class JobOfferController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority(\'ADMIN\') or hasAuthority(\'HR\')")
     public ResponseEntity<JobOfferDTO> updateJobOffer(@PathVariable Long id, @Valid @RequestBody JobOfferDTO jobOfferDTO) {
-        log.debug("REST request to update JobOffer : {}, {}", id, jobOfferDTO);
         if (jobOfferDTO.getId() == null || !jobOfferDTO.getId().equals(id)) {
             return ResponseEntity.badRequest().build();
         }
@@ -82,7 +73,6 @@ public class JobOfferController {
     @PatchMapping("/{id}")
     @PreAuthorize("hasAuthority(\'ADMIN\') or hasAuthority(\'HR\')")
     public ResponseEntity<JobOfferDTO> partialUpdateJobOffer(@PathVariable Long id, @RequestBody JobOfferDTO jobOfferDTO) {
-        log.debug("REST request to partially update JobOffer : {}, {}", id, jobOfferDTO);
         if (jobOfferDTO.getId() == null || !jobOfferDTO.getId().equals(id)) {
             return ResponseEntity.badRequest().build();
         }
@@ -94,15 +84,16 @@ public class JobOfferController {
     /**
      * {@code GET  /api/sourcing/offers} : get all the jobOffers.
      *
-     * @param pageable the pagination information.
+     * @param page
+     * @param size
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of jobOffers in body.
      */
     @GetMapping
     @PreAuthorize("hasAuthority(\'ADMIN\') or hasAuthority(\'HR\') or hasAuthority(\'CONSULTANT\')")
-    public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(Pageable pageable) {
-        log.debug("REST request to get a page of JobOffers");
-        Page<JobOfferDTO> page = jobOfferService.findAll(pageable);
-        return ResponseEntity.ok().body(page.getContent());
+    public ResponseEntity<List<JobOfferDTO>> getAllJobOffers(@RequestParam(defaultValue = "0") int page,
+                                                             @RequestParam(defaultValue = "10") int size) {
+        Page<JobOfferDTO> jobOfferDTOPage = jobOfferService.findAll(page, size);
+        return ResponseEntity.ok().body(jobOfferDTOPage.getContent());
     }
 
     /**
@@ -114,7 +105,6 @@ public class JobOfferController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority(\'ADMIN\') or hasAuthority(\'HR\') or hasAuthority(\'CONSULTANT\')")
     public ResponseEntity<JobOfferDTO> getJobOffer(@PathVariable Long id) {
-        log.debug("REST request to get JobOffer : {}", id);
         Optional<JobOfferDTO> jobOfferDTO = jobOfferService.findOne(id);
         return jobOfferDTO.map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.notFound().build());
@@ -129,7 +119,6 @@ public class JobOfferController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority(\'ADMIN\') or hasAuthority(\'HR\')")
     public ResponseEntity<Void> deleteJobOffer(@PathVariable Long id) {
-        log.debug("REST request to delete JobOffer : {}", id);
         jobOfferService.delete(id);
         return ResponseEntity.noContent().build();
     }

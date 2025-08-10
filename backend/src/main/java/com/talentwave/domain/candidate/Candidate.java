@@ -1,10 +1,13 @@
 package com.talentwave.domain.candidate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.talentwave.domain.profilCV.LangueConsultant;
+import com.talentwave.domain.profilCV.ProfileCV;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,9 +17,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "candidate")
-@Getter
-@Setter
+@Table(name = "candidate")  //Consultant
+@Data
 @NoArgsConstructor
 public class Candidate {
     @Id
@@ -49,7 +51,12 @@ public class Candidate {
     private String linkedInProfileUrl;
 
     @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<LangueConsultant> langueConsultants;
+    //This annotation doesn't allow this field to be recursive in the JSON response
+    @JsonBackReference //back side to ignore in JSON. Means this field is not appeared in JSON Response
+    private List<ProfileCV> profileCVs;
+
+//    @OneToMany(mappedBy = "candidate", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<LangueConsultant> langueConsultants;
 
     // Consider adding fields like currentSalary, expectedSalary, availabilityDate, etc.
     // Also, a relationship to Skills entity might be useful.
@@ -66,86 +73,6 @@ public class Candidate {
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
-    
-    // Getters explicites pour résoudre les problèmes de compilation
-    public Long getId() {
-        return id;
-    }
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
-    public String getFirstName() {
-        return firstName;
-    }
-    
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    
-    public String getLastName() {
-        return lastName;
-    }
-    
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    
-    public String getEmail() {
-        return email;
-    }
-    
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-    
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-    
-    public String getResumeUrl() {
-        return resumeUrl;
-    }
-    
-    public void setResumeUrl(String resumeUrl) {
-        this.resumeUrl = resumeUrl;
-    }
-    
-    public String getCoverLetterText() {
-        return coverLetterText;
-    }
-    
-    public void setCoverLetterText(String coverLetterText) {
-        this.coverLetterText = coverLetterText;
-    }
-    
-    public String getLinkedInProfileUrl() {
-        return linkedInProfileUrl;
-    }
-    
-    public void setLinkedInProfileUrl(String linkedInProfileUrl) {
-        this.linkedInProfileUrl = linkedInProfileUrl;
-    }
-    
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-    
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-    
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-    
-    public void setUpdatedAt(Instant updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+
 }
 

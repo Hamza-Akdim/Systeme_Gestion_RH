@@ -1,7 +1,7 @@
 package com.talentwave.web.rest.candidate;
 
 import com.talentwave.service.candidate.CandidateService;
-import com.talentwave.service.dto.candidate.CandidateDTO;
+import com.talentwave.service.dto.profilCV.CandidateDTO;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

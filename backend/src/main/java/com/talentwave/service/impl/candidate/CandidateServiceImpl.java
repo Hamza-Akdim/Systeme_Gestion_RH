@@ -3,7 +3,7 @@ package com.talentwave.service.impl.candidate;
 import com.talentwave.domain.candidate.Candidate;
 import com.talentwave.repository.candidate.CandidateRepository;
 import com.talentwave.service.candidate.CandidateService;
-import com.talentwave.service.dto.candidate.CandidateDTO;
+import com.talentwave.service.dto.profilCV.CandidateDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;

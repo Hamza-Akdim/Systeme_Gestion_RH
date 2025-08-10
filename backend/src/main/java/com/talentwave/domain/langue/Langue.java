@@ -33,7 +33,7 @@ public class Langue {
 
     @Column(length = 255)
     private String flag;
-
-    @OneToMany(mappedBy = "langue", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<LangueConsultant> langueConsultants;
+//
+//    @OneToMany(mappedBy = "langue", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<LangueConsultant> langueConsultants;
 }

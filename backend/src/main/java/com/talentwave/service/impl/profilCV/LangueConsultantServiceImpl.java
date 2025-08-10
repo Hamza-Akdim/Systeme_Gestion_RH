@@ -38,32 +38,33 @@ public class LangueConsultantServiceImpl implements LangueConsultantService {
 
     @Override
     public LangueConsultantDTO updateLangueConsultant(LangueConsultantDTO langueConsultantDTO) {
-        Optional<LangueConsultant> optionalLangueConsultant = langueConsultantRepository.findById(langueConsultantDTO.getIdLC());
-
-        if (!optionalLangueConsultant.isPresent()) {
-            throw new EntityNotFoundException("LangueConsultant with ID " + langueConsultantDTO.getIdLC() + " not found.");
-        }
-
-        LangueConsultant langueConsultant = optionalLangueConsultant.get();
-
-        if (langueConsultantDTO.getLangue_id() != null) {
-            Langue langue = langueRespository.findById(langueConsultantDTO.getLangue_id())
-                    .orElseThrow(()-> new EntityNotFoundException("This language doesn't exist"));
-
-            langueConsultant.setLangue(langue);
-        }
-
-        if (langueConsultantDTO.getCandidate_id() != null) {
-            Candidate candidate = candidateRepository.findById(langueConsultantDTO.getCandidate_id())
-                    .orElseThrow(()-> new EntityNotFoundException("This candidate doesn't exist"));
-            langueConsultant.setCandidate(candidate);
-        }
-
-        if (langueConsultantDTO.getLevel() != null) {
-            langueConsultant.setLevel(langueConsultantDTO.getLevel());
-        }
-
-        return toDTO(langueConsultantRepository.save(langueConsultant));
+//        Optional<LangueConsultant> optionalLangueConsultant = langueConsultantRepository.findById(langueConsultantDTO.getIdLC());
+//
+//        if (!optionalLangueConsultant.isPresent()) {
+//            throw new EntityNotFoundException("LangueConsultant with ID " + langueConsultantDTO.getIdLC() + " not found.");
+//        }
+//
+//        LangueConsultant langueConsultant = optionalLangueConsultant.get();
+//
+//        if (langueConsultantDTO.getLangue_id() != null) {
+//            Langue langue = langueRespository.findById(langueConsultantDTO.getLangue_id())
+//                    .orElseThrow(()-> new EntityNotFoundException("This language doesn't exist"));
+//
+//            langueConsultant.setLangue(langue);
+//        }
+//
+//        if (langueConsultantDTO.getCandidate_id() != null) {
+//            Candidate candidate = candidateRepository.findById(langueConsultantDTO.getCandidate_id())
+//                    .orElseThrow(()-> new EntityNotFoundException("This candidate doesn't exist"));
+//            langueConsultant.setCandidate(candidate);
+//        }
+//
+//        if (langueConsultantDTO.getLevel() != null) {
+//            langueConsultant.setLevel(langueConsultantDTO.getLevel());
+//        }
+//
+//        return toDTO(langueConsultantRepository.save(langueConsultant));
+        return null;
     }
 
     @Override
@@ -89,21 +90,21 @@ public class LangueConsultantServiceImpl implements LangueConsultantService {
         LangueConsultantDTO langueConsultantDTO = new LangueConsultantDTO();
         langueConsultantDTO.setIdLC(langueConsultant.getIdLC());
         langueConsultantDTO.setLevel(langueConsultant.getLevel());
-        langueConsultantDTO.setLangue_id(langueConsultant.getLangue().getIdL());
-        langueConsultantDTO.setCandidate_id(langueConsultant.getCandidate().getId());
+        langueConsultantDTO.setLangue(langueConsultant.getLangue());
+//        langueConsultantDTO.setCandidate_id(langueConsultant.getCandidate().getId());
         return langueConsultantDTO;
     }
 
     private LangueConsultant toEntity(LangueConsultantDTO dto) {
-        Candidate candidate = candidateRepository.findById(dto.getCandidate_id())
-                .orElseThrow(()-> new EntityNotFoundException("This candidate doesn't exist"));
-        Langue langue = langueRespository.findById(dto.getLangue_id())
-                .orElseThrow(()-> new EntityNotFoundException("This language doesn't exist"));
+//        Candidate candidate = candidateRepository.findById(dto.getCandidate_id())
+//                .orElseThrow(()-> new EntityNotFoundException("This candidate doesn't exist"));
+//        Langue langue = langueRespository.findById(dto.getLangue_id())
+//                .orElseThrow(()-> new EntityNotFoundException("This language doesn't exist"));
 
         LangueConsultant lc = new LangueConsultant();
+        lc.setLangue(dto.getLangue());
         lc.setLevel(dto.getLevel());
-        lc.setLangue(langue);
-        lc.setCandidate(candidate);
+//        lc.setCandidate(candidate);
         return lc;
     }
 }
