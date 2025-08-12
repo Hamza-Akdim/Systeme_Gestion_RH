@@ -19,6 +19,13 @@ public class UserDTO {
     private Long id;
 
     @NotBlank
+    @Size(min = 3, max = 50)
+    private String firstname;
+
+    @NotBlank
+    @Size(min = 3, max = 50)
+    private String lastname;
+
     @Size(max = 50)
     private String username;
 

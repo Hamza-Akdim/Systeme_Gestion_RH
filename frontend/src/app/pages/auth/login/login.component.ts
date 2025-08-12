@@ -7,8 +7,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
-
-
+import { AuthService } from '../service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -24,16 +23,17 @@ import { RippleModule } from 'primeng/ripple';
     InputTextModule,
     PasswordModule,
     RippleModule,
-
   ]
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   isLoading = false;
+  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
 
   initForm(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required], 
       password: ['', Validators.required],
       rememberMe: [false]
     });
@@ -54,16 +54,19 @@ export class LoginComponent implements OnInit {
     }
 
     this.isLoading = true;
+    this.errorMessage = '';
 
-    // Simuler un appel API d'authentification
-    setTimeout(() => {
-      // Stocker le token (à remplacer par un vrai service d'authentification)
-      localStorage.setItem('auth_token', 'fake-jwt-token');
+    const { username, password } = this.loginForm.value;
 
-      // Rediriger vers la page d'accueil
-      this.router.navigate(['/']);
-
-      this.isLoading = false;
-    }, 1500);
+    this.authService.login({ username, password }).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = err.error?.message || 'Identifiants incorrects';
+      }
+    });
   }
 }

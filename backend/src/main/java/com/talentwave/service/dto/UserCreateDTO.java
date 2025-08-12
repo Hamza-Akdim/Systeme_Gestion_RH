@@ -16,6 +16,13 @@ public class UserCreateDTO {
 
     @NotBlank
     @Size(min = 3, max = 50)
+    private String firstname;
+
+    @NotBlank
+    @Size(min = 3, max = 50)
+    private String lastname;
+
+    @Size(min = 3, max = 50)
     private String username;
 
     @NotBlank
@@ -27,8 +34,7 @@ public class UserCreateDTO {
     @Size(min = 6, max = 120) // Assuming a minimum password length
     private String password;
 
-    @NotNull
-    private Role role;
+    private Role role = Role.CONSULTANT;
 
     private Boolean enabled = true; // Default to true, can be overridden
 }

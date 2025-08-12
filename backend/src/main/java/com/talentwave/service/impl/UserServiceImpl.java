@@ -1,12 +1,17 @@
 package com.talentwave.service.impl;
 
+import com.talentwave.domain.User;
+import com.talentwave.domain.enumeration.Role;
+import com.talentwave.repository.UserRepository;
 import com.talentwave.service.UserService;
 import com.talentwave.service.dto.UserCreateDTO;
 import com.talentwave.service.dto.UserDTO;
 import com.talentwave.service.dto.UserUpdateDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,26 +25,10 @@ import java.util.Optional;
  */
 @Service
 public class UserServiceImpl implements UserService {
-
-    // Simulation d'une base de données en mémoire pour les besoins de démonstration
-    private final Map<Long, UserDTO> userDatabase = new HashMap<>();
-
-    public UserServiceImpl() {
-        // Initialisation avec quelques utilisateurs de démonstration
-        UserDTO user1 = new UserDTO();
-        user1.setId(1L);
-        user1.setUsername("johndoe");
-        user1.setEmail("john.doe@talentwave.com");
-        user1.setEnabled(true);
-        userDatabase.put(1L, user1);
-
-        UserDTO user2 = new UserDTO();
-        user2.setId(2L);
-        user2.setUsername("janesmith");
-        user2.setEmail("jane.smith@talentwave.com");
-        user2.setEnabled(true);
-        userDatabase.put(2L, user2);
-    }
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Crée un nouvel utilisateur.
@@ -47,17 +36,33 @@ public class UserServiceImpl implements UserService {
      * @param userCreateDTO les données de création
      * @return l'utilisateur créé
      */
+
     @Override
     public UserDTO createUser(UserCreateDTO userCreateDTO) {
-        // Simuler la création d'un nouvel utilisateur
-        UserDTO newUser = new UserDTO();
-        newUser.setId((long) (userDatabase.size() + 1));
-        newUser.setUsername(userCreateDTO.getUsername());
-        newUser.setEmail(userCreateDTO.getEmail());
-        newUser.setEnabled(true);
-        
-        userDatabase.put(newUser.getId(), newUser);
-        return newUser;
+        String hashedPassword = passwordEncoder.encode(userCreateDTO.getPassword());
+
+        Role role = userCreateDTO.getRole() != null
+                ? userCreateDTO.getRole()
+                : Role.CONSULTANT;
+
+        User user = new User(
+                userCreateDTO.getFirstname(),
+                userCreateDTO.getLastname(),
+                userCreateDTO.getEmail(),
+                hashedPassword,
+                role.name()
+        );
+
+        if (userCreateDTO.getUsername() != null && !userCreateDTO.getUsername().isBlank()) {
+            user.setUsername(userCreateDTO.getUsername());
+        }else{
+            user.setUsername(userCreateDTO.getEmail());
+
+        }
+
+        user = userRepository.save(user);
+
+        return toDTO(user);
     }
 
     /**
@@ -69,21 +74,22 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Optional<UserDTO> updateUser(Long id, UserUpdateDTO userUpdateDTO) {
-        if (!userDatabase.containsKey(id)) {
-            return Optional.empty();
-        }
-        
-        UserDTO existingUser = userDatabase.get(id);
-        // Mise à jour des champs pertinents
-        if (userUpdateDTO.getEmail() != null) {
-            existingUser.setEmail(userUpdateDTO.getEmail());
-        }
-        if (userUpdateDTO.getUsername() != null) {
-            existingUser.setUsername(userUpdateDTO.getUsername());
-        }
-        
-        userDatabase.put(id, existingUser);
-        return Optional.of(existingUser);
+//        if (!userDatabase.containsKey(id)) {
+//            return Optional.empty();
+//        }
+//
+//        UserDTO existingUser = userDatabase.get(id);
+//        // Mise à jour des champs pertinents
+//        if (userUpdateDTO.getEmail() != null) {
+//            existingUser.setEmail(userUpdateDTO.getEmail());
+//        }
+//        if (userUpdateDTO.getUsername() != null) {
+//            existingUser.setUsername(userUpdateDTO.getUsername());
+//        }
+//
+//        userDatabase.put(id, existingUser);
+//        return Optional.of(existingUser);
+        return null;
     }
 
     /**
@@ -94,16 +100,17 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Page<UserDTO> findAll(Pageable pageable) {
-        List<UserDTO> users = new ArrayList<>(userDatabase.values());
-        
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), users.size());
-        
-        if (start > users.size()) {
-            return new PageImpl<>(new ArrayList<>(), pageable, users.size());
-        }
-        
-        return new PageImpl<>(users.subList(start, end), pageable, users.size());
+//        List<UserDTO> users = new ArrayList<>(userDatabase.values());
+//
+//        int start = (int) pageable.getOffset();
+//        int end = Math.min((start + pageable.getPageSize()), users.size());
+//
+//        if (start > users.size()) {
+//            return new PageImpl<>(new ArrayList<>(), pageable, users.size());
+//        }
+//
+//        return new PageImpl<>(users.subList(start, end), pageable, users.size());
+        return null;
     }
 
     /**
@@ -114,10 +121,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Optional<UserDTO> findOne(Long id) {
-        if (!userDatabase.containsKey(id)) {
-            return Optional.empty();
-        }
-        return Optional.of(userDatabase.get(id));
+
+        return null;
     }
     
     /**
@@ -127,7 +132,10 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void deleteUser(Long id) {
-        userDatabase.remove(id);
+        if (!userRepository.existsById(id)) {
+            throw new IllegalArgumentException("User with ID " + id + " not found");
+        }
+        userRepository.deleteById(id);
     }
     
     /**
@@ -142,5 +150,22 @@ public class UserServiceImpl implements UserService {
         // Implémentation simplifiée pour la démonstration
         // Dans un cas réel, il faudrait extraire l'ID de l'utilisateur du principal
         return true;
+    }
+
+    private UserDTO toDTO(User user) {
+        if (user == null) {
+            return null;
+        }
+
+        UserDTO dto = new UserDTO();
+        dto.setId(user.getId());
+        dto.setFirstname(user.getFirstName());
+        dto.setLastname(user.getLastName());
+        dto.setUsername(user.getUsername());
+        dto.setEmail(user.getEmail());
+        dto.setRole(Role.valueOf(user.getRole()));
+        dto.setEnabled(user.isActive());
+
+        return dto;
     }
 }

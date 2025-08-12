@@ -3,7 +3,7 @@ import PrimeUI from 'tailwindcss-primeui';
 
 export default {
     darkMode: ['selector', '[class*="app-dark"]'],
-    content: ['./index.html', './src/**/*.{js,ts}', './public/**/*.json'],
+    content: ['./index.html', './src/**/*.{html,js,ts}', './public/**/*.json'],
     plugins: [PrimeUI],
     theme: {
         screens: {
@@ -12,6 +12,17 @@ export default {
             lg: '992px',
             xl: '1200px',
             '2xl': '1920px'
+        },
+        extend: {
+            keyframes: {
+                'spin-slow': {
+                    '0%': { transform: 'translateX(-50%) rotate(0deg)' },
+                    '100%': { transform: 'translateX(-50%) rotate(360deg)' }
+                }
+            },
+            animation: {
+                'spin-slow': 'spin-slow 20s linear infinite'
+            }
         }
     }
 };

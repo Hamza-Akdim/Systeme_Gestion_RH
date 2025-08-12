@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
     standalone: true,
     imports: [CommonModule],
     template: `
-        <div class="bg-[#1a2238] text-white rounded-2xl p-8 shadow-lg border border-[#28304a] max-w-3xl mx-auto mt-8 space-y-8">
+        <div class="bg-[#1a2238] text-white rounded-2xl p-8 shadow-lg border border-[#28304a]  mt-8 space-y-8">
             <div class="flex items-center justify-between gap-2">
                 <h2 class="text-3xl font-bold text-[#9daaf2]">{{ offre?.title }}</h2>
                 <span

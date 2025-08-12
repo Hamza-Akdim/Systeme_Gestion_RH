@@ -1,75 +1,74 @@
 <div class="register-wrapper">
-    <div class="w-6/12 h-screen hidden md:block flex-shrink-0 register-left"></div>
+    <div class="w-[45%] h-screen hidden md:flex flex-shrink-0 items-center justify-center bg-[#0b0b2a] relative overflow-hidden">
+        <!-- Background pattern -->
+        <div class="absolute inset-0 bg-[url('/images/bg-pattern.png')] bg-cover bg-center opacity-30"></div>
+
+        <!-- Robot Hand -->
+        <img src="/images/robot-hand.png" alt="Robot Hand" class="absolute bottom-0 left-1/2 -translate-x-1/2 max-h-[75%] z-10" />
+
+        <!-- Rotating Globe -->
+        <img
+            src="/images/globe-texture.png"
+            alt="Rotating Globe"
+            class="absolute bottom-[65%] left-1/2 -translate-x-1/2 w-[220px] h-[220px] rounded-full shadow-[0_0_40px_rgba(255,0,150,0.6),0_0_80px_rgba(0,150,255,0.4)] animate-spin-slow z-20 object-cover"
+        />
+    </div>
     <div class="w-full register-right">
         <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
             <div class="flex flex-column align-items-center justify-content-center">
-                <div style="border-radius:56px; padding:0.3rem; width: 100%; max-width: 600px;">
-                    <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+                <div style="border-radius: 56px; padding: 0.3rem; width: 100%; max-width: 600px">
+                    <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
                         <div class="text-center mb-5">
-                            <div class="text-900 text-3xl font-medium mb-3">Créer un compte</div>
-                            <span class="text-600 font-medium">Inscrivez-vous pour rejoindre TalentWave</span>
+                            <div class="text-900 text-3xl font-medium mb-3">Create an Account</div>
+                            <span class="text-600 font-medium">Sign up to join Quanta Edge</span>
                         </div>
 
                         <div>
                             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-                                <div class="grid" style="padding-top: 2rem;">
+                                <div class="grid" style="padding-top: 2rem">
                                     <div class="flex gap-4 mb-4">
                                         <div class="w-full">
-                                            <label for="firstName" class="block text-900 font-medium mb-2">Prénom</label>
-                                            <input id="firstName" type="text" placeholder="Votre prénom" pInputText formControlName="firstName" class="w-full" />
-                                            <small *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="p-error block mt-2">
-                                            Prénom requis
-                                            </small>
+                                            <label for="firstname" class="block text-900 font-medium mb-2">First Name</label>
+                                            <input id="firstname" type="text" placeholder="Your first name" pInputText formControlName="firstname" class="w-full" />
+                                            <small *ngIf="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.touched" class="p-error block mt-2"> First name is required </small>
                                         </div>
 
                                         <div class="w-full">
-                                            <label for="lastName" class="block text-900 font-medium mb-2">Nom</label>
-                                            <input id="lastName" type="text" placeholder="Votre nom" pInputText formControlName="lastName" class="w-full" />
-                                            <small *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="p-error block mt-2">
-                                            Nom requis
-                                            </small>
+                                            <label for="lastname" class="block text-900 font-medium mb-2">Last Name</label>
+                                            <input id="lastname" type="text" placeholder="Your last name" pInputText formControlName="lastname" class="w-full" />
+                                            <small *ngIf="registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.touched" class="p-error block mt-2"> Last name is required </small>
                                         </div>
-                                        </div>
+                                    </div>
 
                                     <div class="col-12 mb-4">
                                         <label for="email" class="block text-900 font-medium mb-2">Email</label>
-                                        <input id="email" type="text" placeholder="Adresse email" pInputText formControlName="email" class="w-full">
-                                        <small *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="p-error block mt-2">
-                                            Email invalide
-                                        </small>
+                                        <input id="email" type="text" placeholder="Email address" pInputText formControlName="email" class="w-full" />
+                                        <small *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="p-error block mt-2"> Invalid email </small>
                                     </div>
 
                                     <div class="col-12 mb-4">
-                                        <label for="password" class="block text-900 font-medium mb-2">Mot de passe</label>
-                                        <p-password id="password" formControlName="password" [toggleMask]="true" placeholder="Mot de passe" [feedback]="true" styleClass="w-full"></p-password>
-                                        <small *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="p-error block mt-2">
-                                            Le mot de passe doit contenir au moins 8 caractères
-                                        </small>
+                                        <label for="password" class="block text-900 font-medium mb-2">Password</label>
+                                        <p-password id="password" formControlName="password" [toggleMask]="true" placeholder="Password" [feedback]="true" styleClass="w-full"></p-password>
+                                        <small *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="p-error block mt-2"> Password must be at least 8 characters long </small>
                                     </div>
 
                                     <div class="col-12 mb-4">
-                                        <label for="confirmPassword" class="block text-900 font-medium mb-2">Confirmer le mot de passe</label>
-                                        <p-password id="confirmPassword" formControlName="confirmPassword" [toggleMask]="true" placeholder="Confirmer le mot de passe" styleClass="w-full"></p-password>
-                                        <small *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="p-error block mt-2">
-                                            Confirmation du mot de passe requise
-                                        </small>
-                                        <small *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched" class="p-error block mt-2">
-                                            Les mots de passe ne correspondent pas
-                                        </small>
+                                        <label for="confirmPassword" class="block text-900 font-medium mb-2">Confirm Password</label>
+                                        <p-password id="confirmPassword" formControlName="confirmPassword" [toggleMask]="true" placeholder="Confirme Password" styleClass="w-full"></p-password>
+                                        <small *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched" class="p-error block mt-2"> Password confirmation is required </small>
+                                        <small *ngIf="registerForm.errors?.['passwordMismatch'] && registerForm.get('confirmPassword')?.touched" class="p-error block mt-2"> Passwords do not match </small>
                                     </div>
 
                                     <div class="col-12 mb-4">
                                         <div class="flex align-items-center">
                                             <p-checkbox id="accept" [binary]="true" formControlName="acceptTerms" styleClass="mr-2"></p-checkbox>
-                                            <label for="accept" class="text-900">J'accepte les <a href="#" class="font-medium no-underline" style="color: var(--primary-color)">termes et conditions</a></label>
+                                            <label for="accept" class="text-900">I accept the <a href="#" class="font-medium no-underline" style="color: var(--primary-color)">terms and conditions</a></label>
                                         </div>
-                                        <small *ngIf="registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched" class="p-error block mt-2">
-                                            Vous devez accepter les termes et conditions
-                                        </small>
+                                        <small *ngIf="registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched" class="p-error block mt-2"> You must accept the terms and conditions </small>
                                     </div>
 
                                     <div class="col-12">
-                                        <button pButton pRipple label="S'inscrire" class="w-full p-3 text-xl" [disabled]="registerForm.invalid || isLoading" type="submit">
+                                        <button pButton pRipple label="Sign Up" class="w-full p-3 text-xl" [disabled]="registerForm.invalid || isLoading" type="submit">
                                             <i *ngIf="isLoading" class="pi pi-spin pi-spinner mr-2"></i>
                                         </button>
                                     </div>
@@ -77,13 +76,13 @@
                             </form>
                         </div>
 
-                        <div class="flex align-items-center justify-content-center mt-5 gap-5" style="padding-top: 0.5rem;">
-                            <p>Vous avez déjà un compte ? &nbsp;</p>
-                            <a [routerLink]="['/auth/login']" class="font-medium no-underline" style="color: var(--primary-color)">Se connecter</a>
+                        <div class="flex align-items-center justify-content-center mt-5 gap-5" style="padding-top: 0.5rem">
+                            <p>Already have an account? &nbsp;</p>
+                            <a [routerLink]="['/auth/login']" class="font-medium no-underline" style="color: var(--primary-color)">Log in</a>
                         </div>
                     </div>
                 </div>
             </div>
-            </div>
-</div>
+        </div>
+    </div>
 </div>

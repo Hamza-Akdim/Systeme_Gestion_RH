@@ -20,6 +20,7 @@ interface MenuItem {
     styleClass?: string;
     id?: string;
     urlTarget?: '_blank' | '_self' | '_parent' | '_top';
+    roles?: string[];
 }
 
 @Component({
@@ -43,231 +44,151 @@ export class AppMenu {
 
     model: MenuItem[] = [
         {
-            label: 'Offres',
+            label: 'Offers',
             icon: 'pi pi-home',
-            items: [
-                {
-                    label: 'Accueil',
-                    icon: 'pi pi-fw pi-home',
-                    routerLink: ['/']
-                }
-            ]
+            roles: ['ADMIN', 'HR', 'CONSULTANT'], // all roles
+            items: [{ label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
         },
         {
             label: 'Administration',
             icon: 'pi pi-cog',
+            roles: ['ADMIN'],
             items: [
-                {
-                    label: 'Gestion des utilisateurs',
-                    icon: 'pi pi-fw pi-users',
-                    routerLink: ['/admin/users']
-                },
-                {
-                    label: 'Gestion des rôles',
-                    icon: 'pi pi-fw pi-id-card',
-                    routerLink: ['/admin/roles']
-                },
-                {
-                    label: 'Paramètres système',
-                    icon: 'pi pi-fw pi-sliders-h',
-                    routerLink: ['/admin/settings']
-                }
+                { label: 'User Management', icon: 'pi pi-fw pi-users', routerLink: ['/admin/users'] },
+                { label: 'Role Management', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/roles'] },
+                { label: 'System Settings', icon: 'pi pi-fw pi-sliders-h', routerLink: ['/admin/settings'] }
             ]
         },
         { separator: true },
         {
-            label: 'Authentification',
+            label: 'Authentication',
             icon: 'pi pi-fw pi-user',
+            roles: ['ADMIN', 'HR', 'CONSULTANT'],
             items: [
-                {
-                    label: 'Connexion',
-                    icon: 'pi pi-fw pi-sign-in',
-                    routerLink: ['/auth/login']
-                },
-                {
-                    label: 'Inscription',
-                    icon: 'pi pi-fw pi-user-plus',
-                    routerLink: ['/auth/register']
-                },
-                {
-                    label: 'Mot de passe oublié',
-                    icon: 'pi pi-fw pi-question',
-                    routerLink: ['/auth/forgotpassword']
-                },
-                {
-                    label: 'Profil utilisateur',
-                    icon: 'pi pi-fw pi-users',
-                    routerLink: ['/auth/profile']
-                },
-                {
-                    label: 'Réinitialisation du MDP',
-                    icon: 'pi pi-fw pi-cog',
-                    routerLink: ['/auth/resetpassword']
-                }
+                { label: 'Login', icon: 'pi pi-fw pi-sign-in', routerLink: ['/auth/login'] },
+                { label: 'Register', icon: 'pi pi-fw pi-user-plus', routerLink: ['/auth/register'] },
+                { label: 'Forgot Password', icon: 'pi pi-fw pi-question', routerLink: ['/auth/forgotpassword'] },
+                { label: 'User Profile', icon: 'pi pi-fw pi-users', routerLink: ['/auth/profile'] },
+                { label: 'Password Reset', icon: 'pi pi-fw pi-cog', routerLink: ['/auth/resetpassword'] }
             ]
         },
         { separator: true },
         {
-            label: 'Candidats/mes Candidatures',
+            label: 'Candidates / My Applications',
             icon: 'pi pi-user',
             items: [
-                {
-                    label: 'Liste des candidats',
-                    icon: 'pi pi-list',
-                    routerLink: ['/pages/candidate'] // Au lieu de '/candidate/candidate-list'
-                },
-                {
-                    label: 'Candidatures',
-                    icon: 'pi pi-file',
-                    routerLink: ['/pages/candidate/applications'] // Au lieu de '/candidate'
-                }
+                { label: 'Candidate List', icon: 'pi pi-list', routerLink: ['/pages/candidate'], roles: ['ADMIN', 'HR'] },
+                { label: 'Applications', icon: 'pi pi-file', routerLink: ['/pages/candidate/applications'], roles: ['CONSULTANT'] }
             ]
         },
         { separator: true },
         {
             label: 'Business',
             icon: 'pi pi-fw pi-briefcase',
+            roles: ['ADMIN', 'HR'],
             items: [
-                {
-                    label: 'Prospects',
-                    icon: 'pi pi-fw pi-users',
-                    routerLink: ['/pages/business']
-                },
-                {
-                    label: 'Enquêtes',
-                    icon: 'pi pi-fw pi-chart-bar',
-                    routerLink: ['/pages/business/surveys']
-                }
+                { label: 'Prospects', icon: 'pi pi-fw pi-users', routerLink: ['/pages/business'] },
+                { label: 'Surveys', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/pages/business/surveys'] }
             ]
         },
-
         {
-            label: 'Évaluation',
+            label: 'Evaluation',
             icon: 'pi pi-star',
+            roles: ['ADMIN', 'HR'],
             items: [
-                {
-                    label: 'Revues annuelles',
-                    icon: 'pi pi-calendar-plus',
-                    routerLink: ['/evaluation/annual-reviews']
-                },
-                {
-                    label: 'Évaluations de compétences',
-                    icon: 'pi pi-check-square',
-                    routerLink: ['/evaluation/skill-assessments']
-                }
+                { label: 'Annual Reviews', icon: 'pi pi-calendar-plus', routerLink: ['/evaluation/annual-reviews'] },
+                { label: 'Skill Assessments', icon: 'pi pi-check-square', routerLink: ['/evaluation/skill-assessments'] }
             ]
         },
         {
-            label: 'Ressources Humaines',
+            label: 'Human Resources',
             icon: 'pi pi-briefcase',
+            roles: ['ADMIN', 'HR'],
             items: [
-                {
-                    label: 'Profils de poste',
-                    icon: 'pi pi-id-card',
-                    routerLink: ['/hr/job-profiles']
-                },
-                {
-                    label: "Plans d'exécution",
-                    icon: 'pi pi-calendar',
-                    routerLink: ['/hr/execution-plans']
-                }
+                { label: 'Job Profiles', icon: 'pi pi-id-card', routerLink: ['/hr/job-profiles'] },
+                { label: 'Execution Plans', icon: 'pi pi-calendar', routerLink: ['/hr/execution-plans'] }
             ]
         },
         {
             label: 'Missions',
             icon: 'pi pi-briefcase',
+            roles: ['ADMIN', 'HR'],
             items: [
-                {
-                    label: 'Liste des missions',
-                    icon: 'pi pi-list',
-                    routerLink: ['/mission/list']
-                },
-                {
-                    label: 'Nouvelle mission',
-                    icon: 'pi pi-plus',
-                    routerLink: ['/mission/new']
-                }
+                { label: 'Mission List', icon: 'pi pi-list', routerLink: ['/mission/list'] },
+                { label: 'New Mission', icon: 'pi pi-plus', routerLink: ['/mission/new'] }
             ]
         },
         {
-            label: 'Intégration',
+            label: 'Onboarding',
             icon: 'pi pi-sign-in',
+            roles: ['ADMIN', 'HR'],
             items: [
-                {
-                    label: "Processus d'intégration",
-                    icon: 'pi pi-list',
-                    routerLink: ['/onboarding/list']
-                },
-                {
-                    label: 'Nouveau processus',
-                    icon: 'pi pi-plus',
-                    routerLink: ['/onboarding/new']
-                }
+                { label: 'Onboarding Processes', icon: 'pi pi-list', routerLink: ['/onboarding/list'] },
+                { label: 'New Process', icon: 'pi pi-plus', routerLink: ['/onboarding/new'] }
             ]
         },
         {
-            label: 'Départ',
+            label: 'Offboarding',
             icon: 'pi pi-sign-out',
+            roles: ['ADMIN', 'HR'],
             items: [
-                {
-                    label: 'Processus de départ',
-                    icon: 'pi pi-list',
-                    routerLink: ['/outboarding/list']
-                },
-                {
-                    label: 'Nouveau processus',
-                    icon: 'pi pi-plus',
-                    routerLink: ['/outboarding/new']
-                }
+                { label: 'Offboarding Processes', icon: 'pi pi-list', routerLink: ['/outboarding/list'] },
+                { label: 'New Process', icon: 'pi pi-plus', routerLink: ['/outboarding/new'] }
             ]
         },
         {
-            label: 'Sélection',
+            label: 'Selection',
             icon: 'pi pi-filter',
+            roles: ['ADMIN', 'HR'],
             items: [
-                {
-                    label: 'Processus de sélection',
-                    icon: 'pi pi-list',
-                    routerLink: ['/selection/list']
-                },
-                {
-                    label: 'Nouveau processus',
-                    icon: 'pi pi-plus',
-                    routerLink: ['/selection/new']
-                }
+                { label: 'Selection Processes', icon: 'pi pi-list', routerLink: ['/selection/list'] },
+                { label: 'New Process', icon: 'pi pi-plus', routerLink: ['/selection/new'] }
             ]
         },
         {
             label: 'Sourcing',
             icon: 'pi pi-search',
+            roles: ['ADMIN', 'HR'],
             items: [
-                {
-                    label: 'Campagnes de sourcing',
-                    icon: 'pi pi-list',
-                    routerLink: ['/sourcing/list']
-                },
-                {
-                    label: 'Nouvelle campagne',
-                    icon: 'pi pi-plus',
-                    routerLink: ['/sourcing/new']
-                }
+                { label: 'Sourcing Campaigns', icon: 'pi pi-list', routerLink: ['/sourcing/list'] },
+                { label: 'New Campaign', icon: 'pi pi-plus', routerLink: ['/sourcing/new'] }
             ]
         },
         {
-            label: 'Feuilles de temps',
+            label: 'Timesheets',
             icon: 'pi pi-clock',
+            roles: ['ADMIN', 'HR'],
             items: [
-                {
-                    label: 'Mes feuilles de temps',
-                    icon: 'pi pi-calendar',
-                    routerLink: ['/timesheet/list']
-                },
-                {
-                    label: 'Nouvelle feuille',
-                    icon: 'pi pi-plus',
-                    routerLink: ['/timesheet/new']
-                }
+                { label: 'My Timesheets', icon: 'pi pi-calendar', routerLink: ['/timesheet/list'] },
+                { label: 'New Timesheet', icon: 'pi pi-plus', routerLink: ['/timesheet/new'] }
             ]
         }
     ];
+
+    ngOnInit() {
+        const roles = (localStorage.getItem('roles') || '').split(',').map((r) => r.trim());
+        this.model = this.filterMenuByRoles(this.model, roles);
+    }
+
+    private filterMenuByRoles(items: MenuItem[], userRoles: string[]): MenuItem[] {
+        return items
+            .map((item) => {
+                // Check if the item has role restrictions
+                if (item.roles && !item.roles.some((r) => userRoles.includes(r))) {
+                    return null; // Hide item
+                }
+
+                // Check children recursively
+                if (item.items) {
+                    item.items = this.filterMenuByRoles(item.items, userRoles);
+                    // If no visible children, hide parent
+                    if (item.items.length === 0 && !item.routerLink) {
+                        return null;
+                    }
+                }
+
+                return item;
+            })
+            .filter(Boolean) as MenuItem[];
+    }
 }

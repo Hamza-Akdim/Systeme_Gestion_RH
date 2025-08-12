@@ -18,9 +18,11 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ProfileComponent } from './profile/profile.component';
 
+
 @NgModule({
   declarations: [
     // Nous n'avons pas besoin de déclarer les composants standalone ici
+
   ],
   imports: [
     CommonModule,

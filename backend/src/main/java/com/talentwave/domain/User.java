@@ -2,19 +2,12 @@ package com.talentwave.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.Instant;
 
-/**
- * Entité représentant un utilisateur dans le système.
- */
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
 @Data
 @NoArgsConstructor
 public class User {
@@ -45,44 +38,10 @@ public class User {
         return username != null ? username : email;
     }
     
-    /**
-     * Setter pour le nom d'utilisateur.
-     *
-     * @param username le nom d'utilisateur à définir
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
     
-    /**
-     * Getter pour le mot de passe hashé.
-     *
-     * @return le hash du mot de passe
-     */
-    public String getPassword() {
-        return passwordHash;
-    }
-    
-    /**
-     * Setter pour le mot de passe hashé.
-     *
-     * @param password le hash du mot de passe à définir
-     */
-    public void setPassword(String password) {
-        this.passwordHash = password;
-    }
-    
-    /**
-     * Vérifie si l'utilisateur est actif.
-     *
-     * @return true si l'utilisateur est actif, false sinon
-     */
-    public boolean isEnabled() {
-        return active;
-    }
 
     @Column(name = "phone_number")
     private String phoneNumber;
