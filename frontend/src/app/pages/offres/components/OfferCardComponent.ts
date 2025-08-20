@@ -14,19 +14,21 @@ import { Router } from '@angular/router';
                    flex flex-col h-full overflow-hidden backdrop-blur-sm"
         >
             <div class="flex justify-between items-start mb-5 relative z-10">
-                <h3 class="text-xl font-bold text-white group-hover:text-[#9daaf2] transition-colors duration-300
-                          leading-tight pr-4 flex-1 line-height-tight">
+                <h3
+                    class="text-xl font-bold text-white group-hover:text-[#9daaf2] transition-colors duration-300
+                          leading-tight pr-4 flex-1 line-height-tight"
+                >
                     {{ offre.title }}
                 </h3>
                 <span
                     class="px-3 py-1.5 rounded-full text-xs font-semibold shadow-md flex-shrink-0
                            transition-all duration-300 group-hover:shadow-lg"
                     [ngClass]="{
-                        'bg-green-200 text-green-800 group-hover:bg-green-300': offre.status === 'OUVERTE',
-                        'bg-red-200 text-red-800 group-hover:bg-red-300': offre.status !== 'OUVERTE'
+                        'bg-green-200 text-green-800 group-hover:bg-green-300': offre.status === 'Open',
+                        'bg-red-200 text-red-800 group-hover:bg-red-300': offre.status !== 'Open'
                     }"
                 >
-                    {{ offre.status === 'OUVERTE' ? 'Ouverte' : offre.status === 'FERMEE' ? 'Fermée' : offre.status }}
+                    {{ offre.status === 'Open' ? 'Open' : offre.status === 'Closed' ? 'Closed' : offre.status }}
                 </span>
             </div>
 
@@ -70,14 +72,14 @@ import { Router } from '@angular/router';
 
             <div class="relative mb-5">
                 <div class="h-px bg-gradient-to-r from-transparent via-[#9daaf2]/60 to-transparent"></div>
-                <div class="absolute inset-0 h-px bg-gradient-to-r from-transparent via-[#9daaf2] to-transparent
-                           opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div
+                    class="absolute inset-0 h-px bg-gradient-to-r from-transparent via-[#9daaf2] to-transparent
+                           opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                ></div>
             </div>
 
             <div class="flex-1 mb-6">
-                <div class="text-sm text-gray-300 leading-relaxed line-clamp-3 group-hover:text-gray-200 transition-colors duration-300">
-                    {{ offre.description | slice: 0 : 160 }}...
-                </div>
+                <div class="text-sm text-gray-300 leading-relaxed line-clamp-3 group-hover:text-gray-200 transition-colors duration-300">{{ offre.description | slice: 0 : 160 }}...</div>
             </div>
 
             <div class="flex justify-end mt-auto">
@@ -90,14 +92,15 @@ import { Router } from '@angular/router';
                 >
                     <span class="flex items-center space-x-2 relative z-10">
                         <span>Voir les détails</span>
-                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300"
-                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                         </svg>
                     </span>
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent
                                transform -skew-x-12 -translate-x-full group/btn-hover:translate-x-full
-                               transition-transform duration-700 ease-out"></div>
+                               transition-transform duration-700 ease-out"
+                    ></div>
                 </button>
             </div>
 
@@ -107,8 +110,10 @@ import { Router } from '@angular/router';
                        transition-transform duration-1000 ease-out pointer-events-none rounded-xl"
             ></div>
 
-            <div class="absolute inset-0 rounded-xl bg-gradient-to-r from-[#9daaf2]/0 via-[#9daaf2]/5 to-[#9daaf2]/0
-                       opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            <div
+                class="absolute inset-0 rounded-xl bg-gradient-to-r from-[#9daaf2]/0 via-[#9daaf2]/5 to-[#9daaf2]/0
+                       opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            ></div>
         </div>
     `,
     styles: [
@@ -157,6 +162,6 @@ export class OfferCardComponent {
     constructor(private router: Router) {}
 
     goToDetail() {
-        this.router.navigate(['/offre', this.offre.id]);
+        this.router.navigate(['/offre-details', this.offre.id]);
     }
 }

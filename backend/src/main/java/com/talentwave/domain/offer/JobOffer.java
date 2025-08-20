@@ -59,6 +59,10 @@ public class JobOffer {
     @JoinColumn(name = "jobOffer_id", referencedColumnName = "id", nullable = false)
     private List<TaskMission> taskMissions;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "jobOffer_id", referencedColumnName = "id", nullable = false)
+    private List<JobQuestion> jobQuestions;
+
     @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
 

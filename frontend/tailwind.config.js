@@ -22,6 +22,10 @@ export default {
             },
             animation: {
                 'spin-slow': 'spin-slow 20s linear infinite'
+            },
+            colors: {
+                sitebg: '#0b0b2a',
+                cardbg: '#1a2238'
             }
         }
     }

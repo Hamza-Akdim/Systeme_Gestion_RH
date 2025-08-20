@@ -11,7 +11,7 @@ export const OFFER_ROUTES: Routes = [
                 data: { breadcrumb: "Offres d'emploi" }
             },
             {
-                path: ':id',
+                path: 'offre-details/:id',
                 loadComponent: () => import('./components/offer-detail/OffreDetailComponent').then((m) => m.OffreDetailComponent),
                 data: { breadcrumb: "Détails de l'offre" }
             }

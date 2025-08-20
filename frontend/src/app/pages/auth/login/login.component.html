@@ -1,6 +1,6 @@
 <div class="login-wrapper">
     <!-- Left login -->
-    <div class="w-6/12 h-screen hidden md:flex flex-shrink-0 items-center justify-center bg-[#0b0b2a] relative overflow-hidden">
+    <div class="w-5/12 h-screen hidden md:flex flex-shrink-0 items-center justify-center bg-[#0b0b2a] relative overflow-hidden">
         <!-- Background pattern -->
         <div class="absolute inset-0 bg-[url('/images/bg-pattern.png')] bg-cover bg-center opacity-30"></div>
 
@@ -21,7 +21,7 @@
                 <div style="border-radius: 56px; padding: 3rem">
                     <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
                         <div class="text-center mb-5">
-                            <div class="text-900 text-3xl font-medium mb-3">Welcome to Quanta Edge</div>
+                            <div class= "text-900 text-3xl ml-2  font-medium mb-3" style="background: linear-gradient(to right, #2229a8, #4764f5); -webkit-background-clip: text; -webkit-text-fill-color: transparent">Welcome to Quanta Edge</div>
                             <span class="text-600 font-medium">Sign in to continue</span>
                         </div>
 
@@ -38,7 +38,7 @@
                                         <label for="password" class="text-900 text-xl font-medium">Password</label>
                                     </div>
                                     <p-password id="password" formControlName="password" [toggleMask]="true" placeholder="Mot de passe" styleClass="w-full" [style]="{ height: '3.5rem' }" [inputStyle]="{ height: '3.5rem' }"></p-password>
-                                    <a [routerLink]="['/auth/forgotpassword']" class="font-medium no-underline ml-2 text-right cursor-pointer" style="padding-top: 1.5rem; color: var(--primary-color)">Forgot your password? </a>
+                                    <a [routerLink]="['/auth/forgotpassword']" class="font-medium no-underline ml-2 text-right cursor-pointer" style="padding-top: 1.5rem; color: #4764f5">Forgot your password? </a>
                                     <small *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="p-error block mt-2"> Password required </small>
                                 </div>
 
@@ -54,13 +54,11 @@
                                 </div>
 
                                 <button
-                                    pButton
-                                    pRipple
-                                    label="Sign in"
-                                    class="w-full p-3 text-xl"
+                                    class="w-full p-3 text-xl rounded-lg text-white shadow-lg transform transition-all duration-300 bg-gradient-to-r from-[#2229A8] to-[#4764F5] hover:from-[#4764F5] hover:to-[#2229A8] border border-[#2229A8] hover:border-[#2229A8] cursor-pointer"
                                     [disabled]="loginForm.invalid || isLoading"
                                     type="submit"
                                 >
+                                    Sign in
                                     <i *ngIf="isLoading" class="pi pi-spin pi-spinner mr-2"></i>
                                 </button>
                             </form>
@@ -68,7 +66,7 @@
 
                         <div class="flex align-items-center justify-content-center mt-5 gap-5" style="padding-top: 0.5rem">
                             <p>Don't have an account? Create one &nbsp;</p>
-                            <a [routerLink]="['/auth/register']" class="font-medium no-underline" style="color: var(--primary-color)"> Créer un compte</a>
+                            <a [routerLink]="['/auth/register']" class="font-medium no-underline" style="color: #4764f5"> Create an account</a>
                         </div>
                     </div>
                 </div>

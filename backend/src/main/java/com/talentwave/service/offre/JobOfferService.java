@@ -14,7 +14,7 @@ public interface JobOfferService {
      * @param jobOfferDTO the entity to save.
      * @return the persisted entity.
      */
-    JobOfferDTO save(JobOfferDTO jobOfferDTO);
+    JobOfferDTO saveOffer(JobOfferDTO jobOfferDTO);
 
     /**
      * Partially updates a jobOffer.

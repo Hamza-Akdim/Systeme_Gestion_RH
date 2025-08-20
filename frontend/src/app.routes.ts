@@ -39,6 +39,11 @@ export const appRoutes: Routes = [
         ]
     },
     { path: 'auth', loadChildren: () => import('@/pages/auth/auth.routes') },
+
+    {
+        path: 'apply', loadComponent: ()=>import('@/pages/profile-cv/profile-cv').then(c=>c.ProfileCvComponent)
+    },
+
     {
         path: 'landing',
         loadComponent: () => import('@/pages/landing/landing').then((c) => c.Landing)

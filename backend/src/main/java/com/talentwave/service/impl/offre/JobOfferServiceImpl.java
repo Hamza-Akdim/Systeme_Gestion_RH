@@ -2,9 +2,11 @@ package com.talentwave.service.impl.offre;
 
 import com.talentwave.domain.offer.HardSkill;
 import com.talentwave.domain.offer.JobOffer;
+import com.talentwave.domain.offer.JobQuestion;
 import com.talentwave.domain.offer.TaskMission;
 import com.talentwave.repository.offre.JobOfferRepository;
 import com.talentwave.service.dto.offre.HardSkillDTO;
+import com.talentwave.service.dto.offre.JobQuestionDTO;
 import com.talentwave.service.dto.offre.TaskMissionDTO;
 import com.talentwave.service.offre.JobOfferService;
 import com.talentwave.service.dto.offre.JobOfferDTO;
@@ -27,7 +29,7 @@ public class JobOfferServiceImpl implements JobOfferService {
 
 
     @Override
-    public JobOfferDTO save(JobOfferDTO jobOfferDTO) {
+    public JobOfferDTO saveOffer(JobOfferDTO jobOfferDTO) {
         JobOffer entity = toEntity(jobOfferDTO);
         JobOffer saved = jobOfferRepository.save(entity);
         return toDto(saved);
@@ -82,7 +84,7 @@ public class JobOfferServiceImpl implements JobOfferService {
     @Override
     public void delete(Long id) {
 //        log.debug("Request to delete JobOffer : {}", id);
-//        jobOfferRepository.deleteById(id);
+        jobOfferRepository.deleteById(id);
     }
 
     private JobOffer toEntity(JobOfferDTO dto) {
@@ -106,6 +108,21 @@ public class JobOfferServiceImpl implements JobOfferService {
                     }).toList();
             jobOffer.setTaskMissions(missions);
         }
+
+        // Map JobQuestions
+        if (dto.getJobQuestionDTOS() != null) {
+            List<JobQuestion> jobQuestions = dto.getJobQuestionDTOS().stream()
+                    .map(jqDto -> {
+                        JobQuestion jq = new JobQuestion();
+                        jq.setQuestion(jqDto.getQuestion());
+                        jq.setResponseType(jqDto.getResponseType());
+                        jq.setImportant(jqDto.getImportant());
+                        jq.setSelectOptions(jqDto.getSelectOptions());
+                        return jq;
+                    }).toList();
+            jobOffer.setJobQuestions(jobQuestions);
+        }
+
 
         // Map HardSkills
         if (dto.getHardSkills() != null) {
@@ -144,6 +161,21 @@ public class JobOfferServiceImpl implements JobOfferService {
                         return tmDto;
                     }).toList();
             dto.setTaskMissions(missions);
+        }
+
+        // Map JobQuestions
+        if (entity.getJobQuestions() != null) {
+            List<JobQuestionDTO> jobQuestionDTOS = entity.getJobQuestions().stream()
+                    .map(jq -> {
+                        JobQuestionDTO jqDto = new JobQuestionDTO();
+                        jqDto.setId(jq.getId());
+                        jqDto.setQuestion(jq.getQuestion());
+                        jqDto.setResponseType(jq.getResponseType());
+                        jqDto.setImportant(jq.getImportant());
+                        jqDto.setSelectOptions(jq.getSelectOptions());
+                        return jqDto;
+                    }).toList();
+            dto.setJobQuestionDTOS(jobQuestionDTOS);
         }
 
         // Map HardSkills

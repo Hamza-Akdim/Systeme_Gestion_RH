@@ -44,6 +44,8 @@ public class JobOfferDTO {
 
     private List<TaskMissionDTO> taskMissions;
 
+    private List<JobQuestionDTO> jobQuestionDTOS;
+
     private Instant createdAt;
 
     private Instant updatedAt;

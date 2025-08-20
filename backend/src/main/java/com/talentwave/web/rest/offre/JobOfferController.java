@@ -32,7 +32,7 @@ public class JobOfferController {
     @PostMapping
     @PreAuthorize("hasAuthority(\'ADMIN\') or hasAuthority(\'HR\')")
     public ResponseEntity<JobOfferDTO> createJobOffer(@Valid @RequestBody JobOfferDTO jobOfferDTO) {
-        JobOfferDTO result = jobOfferService.save(jobOfferDTO);
+        JobOfferDTO result = jobOfferService.saveOffer(jobOfferDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
@@ -56,7 +56,7 @@ public class JobOfferController {
         if (existingOffer.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        JobOfferDTO result = jobOfferService.save(jobOfferDTO);
+        JobOfferDTO result = jobOfferService.saveOffer(jobOfferDTO);
         return ResponseEntity.ok().body(result);
     }
 
