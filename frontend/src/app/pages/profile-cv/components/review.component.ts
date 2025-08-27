@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -6,10 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="space-y-8">
-      <!-- Header -->
-      <h2 class="text-2xl font-bold text-blue-400">Review Your Application</h2>
-      <p class="text-gray-400">Please make sure all your information is correct before submitting.</p>
+    <div class="space-y-8 mt-4">
 
       <!-- Personal Info -->
       <section>
@@ -69,11 +66,18 @@ import { CommonModule } from '@angular/common';
         <ng-template #noMissions><p class="text-gray-500">No missions/projects added.</p></ng-template>
       </section>
 
-      <!-- Actions -->
-      <div class="flex justify-end gap-4 mt-8">
-        <button type="button" (click)="goBack.emit()" class="px-4 py-2 rounded bg-gray-700 hover:bg-gray-600 text-white">Back</button>
-        <button type="button" (click)="submit.emit()" class="px-6 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white font-semibold">Submit Application</button>
-      </div>
+      <!-- Application Questions -->
+      <section>
+        <h3 class="section-title">Application Questions</h3>
+        <div *ngIf="questions?.length; else noQuestions">
+          <div *ngFor="let q of questions" class="review-card">
+            <p><span class="label">{{ q.question }}</span></p>
+            <p>{{ q.answer || 'No Response' }}</p>
+          </div>
+        </div>
+        <ng-template #noQuestions><p class="text-gray-500">No questions answered.</p></ng-template>
+      </section>
+
     </div>
   `,
   styles: [`
@@ -86,7 +90,5 @@ import { CommonModule } from '@angular/common';
 export class ReviewComponent {
   @Input() candidate: any;
   @Input() experience: any;
-
-  @Output() goBack = new EventEmitter<void>();
-  @Output() submit = new EventEmitter<void>();
+  @Input() questions: any[] = [];   // <-- new input for ApplicationQuestions
 }

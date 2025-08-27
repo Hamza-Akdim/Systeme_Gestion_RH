@@ -5,8 +5,8 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { MyInformationComponent } from './components/my-information.component';
 import { MyExperienceComponent } from './components/my-experience.component';
 import { ApplicationQuestionsComponent } from './components/application-questions.component';
-import { VoluntaryDisclosuresComponent } from "./components/voluntary-disclosures.component";
-import { ReviewComponent } from "./components/review.component";
+import { VoluntaryDisclosuresComponent } from './components/voluntary-disclosures.component';
+import { ReviewComponent } from './components/review.component';
 
 @Component({
     selector: 'app-profile-cv',
@@ -17,8 +17,8 @@ import { ReviewComponent } from "./components/review.component";
             <div class="max-w-7xl mx-auto px-4 sm:px-6">
                 <div class="h-20 flex items-center justify-between text-white relative">
                     <!-- Left: Go Back button -->
-                    <a href="#" class="absolute left-0 flex items-center gap-2 bg-[#0d6efd] hover:bg-blue-600 text-white font-medium px-3 py-2 rounded-full shadow-md transition-all duration-200">
-                        <span class="">&larr;</span>
+                    <a href="#" class="absolute left-0 flex items-center gap-2 border-2 border-[#0d6efd] text-[#0d6efd] font-bold px-3 py-2 rounded-full shadow-md transition-all duration-200 hover:bg-[#0d6efd] hover:text-white">
+                        <span>&larr;</span>
                         <span>Go Back</span>
                     </a>
 
@@ -45,7 +45,7 @@ import { ReviewComponent } from "./components/review.component";
                                 </div>
                                 <div class="flex-1 h-[2px]" [class.bg-transparent]="i === steps.length - 1" [class.bg-[#0088CE]]="i + 1 < currentStep" [class.bg-gray-400]="i + 1 >= currentStep && i !== steps.length - 1"></div>
                             </div>
-                            <label class="mt-2 text-sm" [class.font-semibold]="i + 1 === currentStep">{{ step }}</label>
+                            <label class="mt-2 text-[10px] md:text-sm" [class.font-semibold]="i + 1 === currentStep">{{ step }}</label>
                         </li>
                     </ol>
 
@@ -71,12 +71,37 @@ import { ReviewComponent } from "./components/review.component";
                             </div>
 
                             <div *ngIf="currentStep === 5">
-                                <app-review ></app-review>
+                                <app-review [candidate]="candidate" [experience]="experienceData" [questions]="applicationQuestions"></app-review>
                             </div>
 
                             <div class="mt-8 flex justify-between">
-                                <button type="button" (click)="prevStep()" [disabled]="currentStep === 1" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2 rounded disabled:opacity-50">Previous</button>
-                                <button *ngIf="currentStep < steps.length" type="button" (click)="nextStep(candidateForm)" class="bg-[#0d6efd] hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded">Next</button>
+                                <button
+                                    type="button"
+                                    (click)="prevStep()"
+                                    [disabled]="currentStep === 1"
+                                    class="border-2 border-gray-400 text-gray-300 font-bold px-6 py-2 rounded transition-all duration-200 bg-white/5 hover:bg-gray-500 hover:text-white hover:border-gray-500 disabled:opacity-50"
+                                >
+                                    Previous
+                                </button>
+
+                                <button
+                                    *ngIf="currentStep < steps.length"
+                                    type="button"
+                                    [disabled]="currentStep === 4 && !voluntaryAccepted"
+                                    (click)="nextStep(candidateForm)"
+                                    class="border-2 border-[#0d6efd] text-[#0d6efd] font-bold px-6 py-2 rounded transition-all duration-200 hover:bg-[#0d6efd] hover:text-white"
+                                >
+                                    Next
+                                </button>
+
+                                <button
+                                    *ngIf="currentStep === steps.length"
+                                    type="button"
+                                    (click)="submitForm()"
+                                    class="border border-[#0d6efd] text-[#0d6efd] font-semibold px-6 py-2 rounded transition-all duration-200 hover:bg-[#0d6efd] hover:text-white"
+                                >
+                                    Submit
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -156,7 +181,6 @@ export class ProfileCvComponent {
     ];
 
     voluntaryAccepted = false;
-
 
     nextStep(form: NgForm) {
         if (form.valid) {

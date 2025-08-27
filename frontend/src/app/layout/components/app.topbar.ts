@@ -30,7 +30,7 @@ import {AppBreadcrumb} from '@/layout/components/app.breadcrumb';
         <div class="layout-topbar-menu-section">
             <div app-sidebar></div>
         </div>
-        <div class="topbar-end">
+        <div class="topbar-end mr-5">
             <ul class="topbar-menu">
                 <li class="!hidden lg:!block">
                     <div
@@ -49,13 +49,13 @@ import {AppBreadcrumb} from '@/layout/components/app.breadcrumb';
                     </div>
                 </li>
 
-                <li class="profile-item topbar-item">
+                <!-- <li class="profile-item topbar-item">
                     <button pButton pRipple type="button" icon="pi pi-bell" class="text-surface-500 dark:text-surface-400 flex-shrink-0" severity="secondary" text rounded></button>
-                </li>
+                </li> -->
 
-                <li class="profile-item topbar-item">
+                <!-- <li class="profile-item topbar-item">
                     <button pButton pRipple type="button" icon="pi pi-comment" class="relative text-surface-500 dark:text-surface-400 flex-shrink-0" severity="secondary" text rounded></button>
-                </li>
+                </li> -->
 
                 <li class="ml-4">
                     <button pButton pRipple type="button" icon="pi pi-palette" class="flex-shrink-0 config-button" text rounded (click)="onConfigButtonClick()"></button>
@@ -116,10 +116,10 @@ import {AppBreadcrumb} from '@/layout/components/app.breadcrumb';
                     </ul>
                 </li>
 
-                <li class="right-panel-button relative !hidden lg:!block">
+                <!-- <li class="right-panel-button relative !hidden lg:!block">
                     <button pButton pRipple type="button" label="Today" style="width: 5.7rem" icon="pi pi-bookmark" class="layout-rightmenu-button !hidden md:!inline-flex font-normal" (click)="onProfileMenuButtonClick()"></button>
                     <button pButton pRipple type="button" icon="pi pi-bookmark" class="layout-rightmenu-button !block md:!hidden font-normal" (click)="onSidebarButtonClick()"></button>
-                </li>
+                </li> -->
             </ul>
         </div>
     `,

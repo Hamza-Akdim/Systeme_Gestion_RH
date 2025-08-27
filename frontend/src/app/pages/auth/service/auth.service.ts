@@ -46,4 +46,8 @@ export class AuthService {
     isLoggedIn(): boolean {
         return !!this.getToken();
     }
+
+    getRole() : string | null {
+        return localStorage.getItem("roles");
+    }
 }

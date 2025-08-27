@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'offre-detail',
@@ -74,11 +74,12 @@ import { ActivatedRoute } from '@angular/router';
 
             <div class="flex justify-end">
                 <button
+                    (click)="Apply()"
                     class="bg-gradient-to-r from-[#2229A8] to-[#4764F5] hover:from-[#4764F5] hover:to-[#2229A8]
                         text-white px-8 py-3 rounded-full font-semibold shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40
                         transition-all duration-300"
                 >
-                    Postuler
+                    Apply
                 </button>
             </div>
         </div>
@@ -87,7 +88,7 @@ import { ActivatedRoute } from '@angular/router';
 export class OffreDetailComponent {
     offre: any;
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private router: Router) {
         this.offre = this.offre = {
             title: 'DevOps Engineer',
             description:
@@ -115,5 +116,9 @@ export class OffreDetailComponent {
                 { title: 'Participer à l’automatisation des processus manuels pour améliorer l’efficacité opérationnelle.' }
             ]
         };
+    }
+
+    Apply() {
+        this.router.navigate(['/apply']);
     }
 }

@@ -29,8 +29,8 @@ export class VoluntaryDisclosuresComponent {
     @Output() acceptedChange = new EventEmitter<boolean>();
 
     onCheckboxChange(event: Event) {
-        const checked = (event.target as HTMLInputElement).checked;
-        this.accepted = checked;
+        this.accepted = (event.target as HTMLInputElement).checked;
+
         this.acceptedChange.emit(this.accepted);
     }
 }

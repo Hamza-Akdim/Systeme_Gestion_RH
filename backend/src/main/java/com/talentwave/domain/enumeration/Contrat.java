@@ -1,5 +1,5 @@
 package com.talentwave.domain.enumeration;
 
 public enum Contrat {
-    CDI, CDD, STAGE, FREELANCE
+    CDI, CDD, Intern, FREELANCE
 }

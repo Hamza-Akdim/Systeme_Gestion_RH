@@ -46,9 +46,19 @@ export class AppMenu {
         {
             label: 'Offers',
             icon: 'pi pi-home',
-            roles: ['ADMIN', 'HR', 'CONSULTANT'], // all roles
+            roles: ['CONSULTANT'],
             items: [{ label: 'Home', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
         },
+        {
+            label: 'Offers',
+            icon: 'pi pi-list',
+            roles: ['ADMIN', 'HR'], // all roles
+            items: [
+                { label: 'Offer Management', icon: 'pi pi-fw pi-list', routerLink: ['/hr/job-offer'] },
+                { label: 'New Offer', icon: 'pi pi-fw pi-plus', routerLink: ['/hr/job-offer/createOffer'] }
+            ]
+        },
+
         {
             label: 'Administration',
             icon: 'pi pi-cog',
@@ -74,14 +84,28 @@ export class AppMenu {
         },
         { separator: true },
         {
-            label: 'Candidates / My Applications',
+            label: 'Candidates',
             icon: 'pi pi-user',
-            items: [
-                { label: 'Candidate List', icon: 'pi pi-list', routerLink: ['/pages/candidate'], roles: ['ADMIN', 'HR'] },
-                { label: 'Applications', icon: 'pi pi-file', routerLink: ['/pages/candidate/applications'], roles: ['CONSULTANT'] }
-            ]
+            items: [{ label: 'Candidate List', icon: 'pi pi-list', routerLink: ['/pages/candidate'], roles: ['ADMIN', 'HR'] }]
         },
         { separator: true },
+        {
+            label: 'My Applications',
+            icon: 'pi pi-user',
+            items: [{ label: 'Applications', icon: 'pi pi-file', routerLink: ['/pages/candidate/applications'], roles: ['CONSULTANT'] }]
+        },
+        { separator: true },
+
+        {
+            label: 'Human Resources',
+            icon: 'pi pi-briefcase',
+            roles: ['ADMIN', 'HR'],
+            items: [
+                // { label: 'Job Offer', icon: 'pi pi-id-card', routerLink: ['/hr/job-offer'] },
+                { label: 'Job Profiles', icon: 'pi pi-id-card', routerLink: ['/hr/job-profiles'] },
+                { label: 'Execution Plans', icon: 'pi pi-calendar', routerLink: ['/hr/execution-plans'] }
+            ]
+        },
         {
             label: 'Business',
             icon: 'pi pi-fw pi-briefcase',
@@ -100,15 +124,7 @@ export class AppMenu {
                 { label: 'Skill Assessments', icon: 'pi pi-check-square', routerLink: ['/evaluation/skill-assessments'] }
             ]
         },
-        {
-            label: 'Human Resources',
-            icon: 'pi pi-briefcase',
-            roles: ['ADMIN', 'HR'],
-            items: [
-                { label: 'Job Profiles', icon: 'pi pi-id-card', routerLink: ['/hr/job-profiles'] },
-                { label: 'Execution Plans', icon: 'pi pi-calendar', routerLink: ['/hr/execution-plans'] }
-            ]
-        },
+
         {
             label: 'Missions',
             icon: 'pi pi-briefcase',

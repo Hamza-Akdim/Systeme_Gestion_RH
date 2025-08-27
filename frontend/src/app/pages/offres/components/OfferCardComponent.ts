@@ -162,6 +162,6 @@ export class OfferCardComponent {
     constructor(private router: Router) {}
 
     goToDetail() {
-        this.router.navigate(['/offre-details', this.offre.id]);
+        this.router.navigate(['/offer-details', this.offre.id]);
     }
 }
