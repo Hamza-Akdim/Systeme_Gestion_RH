@@ -2,7 +2,6 @@ package com.talentwave.web.rest.profilCV;
 
 import com.talentwave.service.dto.profilCV.ProfileCVDTO;
 import com.talentwave.service.profilCV.ProfileCVService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;

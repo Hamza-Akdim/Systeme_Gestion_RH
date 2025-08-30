@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/job-offers")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class JobOfferController {
 
     @Autowired

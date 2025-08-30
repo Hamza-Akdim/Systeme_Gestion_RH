@@ -33,16 +33,16 @@ import { Router } from '@angular/router';
             <!-- INFO GRID -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
                 <div class="info-box">
-                    <span class="info-label">Secteur</span>
+                    <span class="info-label">Sector</span>
                     <span class="info-value">{{ offer.secteur }}</span>
                 </div>
                 <div class="info-box">
-                    <span class="info-label">Contrat</span>
+                    <span class="info-label">Contract</span>
 
                     <span class="info-value">{{ offer.contrat }}</span>
                 </div>
                 <div class="info-box">
-                    <span class="info-label">Clôture</span>
+                    <span class="info-label">Closing Date</span>
                     <span class="info-value">{{ offer.closingDate | date: 'dd/MM/yyyy' }}</span>
                 </div>
             </div>

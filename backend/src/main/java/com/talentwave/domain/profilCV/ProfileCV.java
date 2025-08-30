@@ -3,6 +3,7 @@ package com.talentwave.domain.profilCV;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.talentwave.domain.candidate.Candidate;
 import com.talentwave.domain.offer.HardSkill;
+import com.talentwave.domain.offer.JobOffer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,10 @@ public class ProfileCV {
 
     private String title;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_offer_id", nullable = false)
+    private JobOffer jobOffer;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Diplome> diplomas;
 
@@ -37,19 +42,21 @@ public class ProfileCV {
     )
     private List<Skill> skills;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<LangueConsultant> langueConsultants;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     //This annotation doesn't allow this field to be recursive in the JSON response
     @JsonManagedReference // forward side to serialize. Means this field will be appeared in JSON Response, but for the related field in the Candidate Class will not be appeared for not having recursivity
     private Candidate candidate;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(
             name = "profileCV_id",
             nullable = false
     )
     private List<MissionProject> missionProjects;
+
+
 }
 

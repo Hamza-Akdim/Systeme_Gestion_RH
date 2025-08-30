@@ -36,28 +36,13 @@ export const appRoutes: Routes = [
                 data: { breadcrumb: 'Pages' },
                 loadChildren: () => import('@/pages/pages.routes')
             }
-            // {
-            //     path: 'uikit',
-            //     data: { breadcrumb: 'UI Kit' },
-            //     loadChildren: () => import('@/pages/uikit/uikit.routes')
-            // },
 
-            // {
-            //     path: 'apps',
-            //     data: { breadcrumb: 'Apps' },
-            //     loadChildren: () => import('./app/apps/apps.routes')
-            // },
-            // {
-            //     path: 'blocks',
-            //     data: { breadcrumb: 'Prime Blocks' },
-            //     loadChildren: () => import('@/pages/blocks/blocks.routes')
-            // },
         ]
     },
     { path: 'auth', loadChildren: () => import('@/pages/auth/auth.routes') },
 
     {
-        path: 'apply',
+        path: 'job-offer/apply/:id',
         loadComponent: () => import('@/pages/profile-cv/profile-cv').then((c) => c.ProfileCvComponent)
     },
     {

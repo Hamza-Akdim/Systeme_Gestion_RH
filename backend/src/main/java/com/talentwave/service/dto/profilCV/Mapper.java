@@ -1,10 +1,12 @@
 package com.talentwave.service.dto.profilCV;
 
 import com.talentwave.domain.candidate.Candidate;
+import com.talentwave.domain.langue.Langue;
 import com.talentwave.domain.profilCV.Diplome;
 import com.talentwave.domain.profilCV.LangueConsultant;
 import com.talentwave.domain.profilCV.MissionProject;
 import com.talentwave.domain.profilCV.Skill;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
 
@@ -13,6 +15,7 @@ import java.util.List;
  */
 
 public class Mapper {
+
     // ---------------------CANDIDATE MAPPING----------------------------------
     public static CandidateDTO toDto(Candidate candidate) {
         CandidateDTO dto = new CandidateDTO();
@@ -30,7 +33,6 @@ public class Mapper {
     }
 
     public static Candidate toEntity(CandidateDTO dto) {
-        // Utiliser le constructeur sans argument pour éviter les erreurs de compilation
         Candidate entity = new Candidate();
         entity.setId(dto.getId());
         entity.setFirstName(dto.getFirstName());
@@ -40,7 +42,6 @@ public class Mapper {
         entity.setResumeUrl(dto.getResumeUrl());
         entity.setCoverLetterText(dto.getCoverLetterText());
         entity.setLinkedInProfileUrl(dto.getLinkedInProfileUrl());
-        // createdAt and updatedAt are handled in save/update logic
         return entity;
     }
 
@@ -142,20 +143,13 @@ public class Mapper {
         langueConsultantDTO.setIdLC(langueConsultant.getIdLC());
         langueConsultantDTO.setLevel(langueConsultant.getLevel());
         langueConsultantDTO.setLangue(langueConsultant.getLangue());
-//        langueConsultantDTO.setCandidate_id(langueConsultant.getCandidate().getId());
         return langueConsultantDTO;
     }
 
     public static LangueConsultant toEntity(LangueConsultantDTO dto) {
-//        Candidate candidate = candidateRepository.findById(dto.getCandidate_id())
-//                .orElseThrow(()-> new EntityNotFoundException("This candidate doesn't exist"));
-//        Langue langue = langueRespository.findById(dto.getLangue_id())
-//                .orElseThrow(()-> new EntityNotFoundException("This language doesn't exist"));
-
         LangueConsultant lc = new LangueConsultant();
         lc.setLangue(dto.getLangue());
         lc.setLevel(dto.getLevel());
-//        lc.setCandidate(candidate);
         return lc;
     }
 

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JobOfferService } from '../../job-offer-service';
 
 @Component({
     selector: 'app-job-offer-form',
@@ -11,6 +12,18 @@ import { Router } from '@angular/router';
         <div class="bg-[#1a2238] text-white p-8 rounded-xl shadow-lg space-y-8">
             <!-- Heading -->
             <h2 class="text-2xl font-semibold text-center mb-6 pb-2 border-b-2 border-gray-700">Create New Offer</h2>
+
+            <!--Displays after submit  -->
+            <div
+                *ngIf="message"
+                [ngClass]="{
+                    'bg-green-600 text-white': messageType === 'success',
+                    'bg-red-600 text-white': messageType === 'error'
+                }"
+                class="p-3 rounded-lg text-center font-semibold shadow-md"
+            >
+                {{ message }}
+            </div>
 
             <!-- Form -->
             <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-8">
@@ -145,13 +158,17 @@ import { Router } from '@angular/router';
 export class JobOfferFormComponent implements OnInit {
     form!: FormGroup;
 
+    message: string | null = null;
+    messageType: 'success' | 'error' | null = null;
+
     contrats = ['CDI', 'CDD', 'Intern', 'FREELANCE'];
     secteurs = ['SOFTWARE_DEVELOPMENT', 'IT_MANAGEMENT', 'DATA_SOLUTIONS', 'POWER_GENERATION', 'TELECOMMUNICATIONS', 'IT_SUPPORT', 'ENERGY_AUDITS', 'STAFFING', 'POWER_SYSTEMS', 'ENERGY_MANAGEMENT'];
     statuses = ['OPEN', 'FILLED', 'CLOSED', 'ON_HOLD'];
 
     constructor(
         private fb: FormBuilder,
-        private router: Router
+        private router: Router,
+        private jobOfferService: JobOfferService
     ) {}
 
     ngOnInit(): void {
@@ -200,12 +217,36 @@ export class JobOfferFormComponent implements OnInit {
     }
 
     onSubmit() {
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+            return;
+        }
+
         const formValue = { ...this.form.value };
+
         formValue.jobQuestionDTOS = formValue.jobQuestionDTOS.map((q: any) => ({
             ...q,
             selectOptions: q.responseType === 'SELECT' && q.selectOptions ? q.selectOptions.split(',').map((s: string) => s.trim()) : []
         }));
-        console.log('Final JSON:', formValue);
+
+        this.jobOfferService.createJobOffer(formValue).subscribe({
+            next: (res) => {
+                console.log('Offer created:', res);
+                this.message = 'Offer created successfully!';
+                this.messageType = 'success';
+
+                setTimeout(() => this.router.navigate(['/hr/job-offer']), 2000);
+            },
+            error: (err) => {
+                console.error('Error creating offer:', err);
+                this.message = 'Failed to create offer. Please try again.';
+                this.messageType = 'error';
+                setTimeout(() => {
+                    this.message = '';
+                    this.messageType = null;
+                }, 2000);
+            }
+        });
     }
 
     cancel() {

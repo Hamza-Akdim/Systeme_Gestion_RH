@@ -7,6 +7,8 @@ import { MyExperienceComponent } from './components/my-experience.component';
 import { ApplicationQuestionsComponent } from './components/application-questions.component';
 import { VoluntaryDisclosuresComponent } from './components/voluntary-disclosures.component';
 import { ReviewComponent } from './components/review.component';
+import { JobOffer, JobOfferService } from '../offres/offer.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-profile-cv',
@@ -34,7 +36,9 @@ import { ReviewComponent } from './components/review.component';
         <main class="min-h-screen bg-sitebg text-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10">
                 <div class="w-full lg:max-w-6xl sm:max-w-3xl mx-auto rounded-2xl bg-cardbg p-8 shadow-xl">
-                    <h1 class="text-2xl font-bold mt-3">DEVELOPPEUR BACK-END (F/H)</h1>
+                    <h1 class="text-2xl font-bold mt-3">
+                        {{ jobOffer.title }}
+                    </h1>
 
                     <ol class="mt-6 flex items-center w-full">
                         <li *ngFor="let step of steps; let i = index" class="flex flex-col items-center flex-1">
@@ -155,32 +159,29 @@ export class ProfileCvComponent {
         ]
     };
 
-    applicationQuestions = [
-        {
-            id: 52,
-            question: 'How long have you been using DevOps tools ?',
-            responseType: 'TEXT',
-            important: 'Y',
-            answer: ''
-        },
-        {
-            id: 53,
-            question: 'Are you allowed to work in France ?',
-            responseType: 'SELECT',
-            important: 'Y',
-            selectOptions: ['Yes', 'No'],
-            answer: ''
-        },
-        {
-            id: 54,
-            question: 'How much do you expect your salary to be ?',
-            responseType: 'TEXT',
-            important: 'N',
-            answer: ''
-        }
-    ];
+    applicationQuestions: any[] = [];
 
     voluntaryAccepted = false;
+
+    jobOffer!: JobOffer;
+
+    constructor(
+        private route: ActivatedRoute,
+        private jobOfferService: JobOfferService
+    ) {}
+
+    ngOnInit() {
+        const id = this.route.snapshot.paramMap.get('id'); // get id from URL
+        if (id) {
+            this.jobOfferService.getOfferById(+id).subscribe({
+                next: (offer) => {
+                    this.jobOffer = offer;
+                    this.applicationQuestions = offer.jobQuestionDTOS || [];
+                },
+                error: (err) => console.error('Failed to fetch job offer', err)
+            });
+        }
+    }
 
     nextStep(form: NgForm) {
         if (form.valid) {
@@ -198,6 +199,6 @@ export class ProfileCvComponent {
 
     submitForm() {
         console.log('Candidate DTO:', this.candidate);
-        // here you send to backend via HTTP POST
+        console.log('Application Answers:', this.applicationQuestions); // here you send to backend via HTTP POST
     }
 }

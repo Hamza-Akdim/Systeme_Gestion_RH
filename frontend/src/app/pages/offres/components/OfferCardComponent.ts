@@ -24,11 +24,12 @@ import { Router } from '@angular/router';
                     class="px-3 py-1.5 rounded-full text-xs font-semibold shadow-md flex-shrink-0
                            transition-all duration-300 group-hover:shadow-lg"
                     [ngClass]="{
-                        'bg-green-200 text-green-800 group-hover:bg-green-300': offre.status === 'Open',
-                        'bg-red-200 text-red-800 group-hover:bg-red-300': offre.status !== 'Open'
+                        'bg-green-200 text-green-800 group-hover:bg-green-300': offre.status === 'OPEN',
+                        'bg-red-200 text-red-800 group-hover:bg-red-300': offre.status !== 'OPEN'
                     }"
                 >
-                    {{ offre.status === 'Open' ? 'Open' : offre.status === 'Closed' ? 'Closed' : offre.status }}
+
+                    {{ offre.status === 'OPEN' ? 'Open' : offre.status === 'CLOSED' ? 'Closed' : offre.status }}
                 </span>
             </div>
 
@@ -40,7 +41,7 @@ import { Router } from '@angular/router';
                         </svg>
                     </div>
                     <div class="flex flex-col min-w-0 flex-1">
-                        <span class="font-semibold text-[#9daaf2] text-xs mb-1 uppercase tracking-wide">Secteur</span>
+                        <span class="font-semibold text-[#9daaf2] text-xs mb-1 uppercase tracking-wide">Sector</span>
                         <span class="text-white text-sm font-medium truncate">{{ offre.secteur }}</span>
                     </div>
                 </div>
@@ -52,7 +53,7 @@ import { Router } from '@angular/router';
                         </svg>
                     </div>
                     <div class="flex flex-col min-w-0 flex-1">
-                        <span class="font-semibold text-[#9daaf2] text-xs mb-1 uppercase tracking-wide">Contrat</span>
+                        <span class="font-semibold text-[#9daaf2] text-xs mb-1 uppercase tracking-wide">Contract</span>
                         <span class="text-white text-sm font-medium truncate">{{ offre.contrat }}</span>
                     </div>
                 </div>
@@ -64,7 +65,7 @@ import { Router } from '@angular/router';
                         </svg>
                     </div>
                     <div class="flex flex-col min-w-0 flex-1">
-                        <span class="font-semibold text-[#9daaf2] text-xs mb-1 uppercase tracking-wide">Clôture</span>
+                        <span class="font-semibold text-[#9daaf2] text-xs mb-1 uppercase tracking-wide">Closing Date</span>
                         <span class="text-white text-sm font-medium truncate">{{ offre.closingDate | date: 'dd/MM/yyyy' }}</span>
                     </div>
                 </div>
@@ -91,7 +92,7 @@ import { Router } from '@angular/router';
                            relative overflow-hidden group/btn"
                 >
                     <span class="flex items-center space-x-2 relative z-10">
-                        <span>Voir les détails</span>
+                        <span>View Details</span>
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
                         </svg>

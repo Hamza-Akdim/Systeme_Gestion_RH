@@ -1,10 +1,12 @@
 package com.talentwave.service.impl.profilCV;
 
 import com.talentwave.domain.profilCV.ProfileCV;
+import com.talentwave.repository.offre.JobOfferRepository;
 import com.talentwave.repository.profilCV.ProfileCVRepository;
 import com.talentwave.service.dto.profilCV.ProfileCVDTO;
 import com.talentwave.service.profilCV.ProfileCVService;
 import com.talentwave.service.dto.profilCV.Mapper;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 public class ProfileCVServiceImpl implements ProfileCVService {
     @Autowired
     ProfileCVRepository profileCVRepository;
+    @Autowired
+    JobOfferRepository jobOfferRepository;
 
     @Override
     public ProfileCVDTO addProfileCV(ProfileCVDTO profileCVDTO) {
@@ -90,6 +94,7 @@ public class ProfileCVServiceImpl implements ProfileCVService {
     private ProfileCV mapToEntity(ProfileCVDTO dto) {
         ProfileCV entity = new ProfileCV();
         entity.setTitle(dto.getTitle());
+        entity.setJobOffer(jobOfferRepository.findById(dto.getId_jobOffer()).orElseThrow());
         entity.setCandidate(Mapper.toEntity(dto.getCandidateDTO()));
         entity.setDiplomas(Mapper.toEntityListDiplomas(dto.getDiplomasDTO()));
         entity.setSkills(Mapper.toEntityListSkill(dto.getSkillDTOs()));
@@ -102,6 +107,7 @@ public class ProfileCVServiceImpl implements ProfileCVService {
         ProfileCVDTO dto = new ProfileCVDTO();
         dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
+        dto.setId_jobOffer(entity.getJobOffer().getId());
         dto.setCandidateDTO(Mapper.toDto(entity.getCandidate()));
         dto.setDiplomasDTO(Mapper.toDTOListDiplomas(entity.getDiplomas()));
         dto.setSkillDTOs(Mapper.toDTOListSkill(entity.getSkills()));

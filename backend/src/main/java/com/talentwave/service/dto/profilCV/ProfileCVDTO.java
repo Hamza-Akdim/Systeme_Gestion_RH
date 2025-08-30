@@ -5,6 +5,8 @@ import com.talentwave.domain.profilCV.Diplome;
 import com.talentwave.domain.profilCV.LangueConsultant;
 import com.talentwave.domain.profilCV.MissionProject;
 import com.talentwave.domain.profilCV.Skill;
+import com.talentwave.service.dto.offre.JobOfferDTO;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +23,9 @@ public class ProfileCVDTO {
     private Long id;
 
     private String title;
+
+    @NotNull
+    private Long id_jobOffer;
 
     private List<DiplomeDTO> diplomasDTO;
 

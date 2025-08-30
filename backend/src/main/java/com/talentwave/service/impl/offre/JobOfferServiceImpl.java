@@ -76,9 +76,8 @@ public class JobOfferServiceImpl implements JobOfferService {
     @Override
     @Transactional(readOnly = true)
     public Optional<JobOfferDTO> findOne(Long id) {
-//        log.debug("Request to get JobOffer : {}", id);
-//        return jobOfferRepository.findById(id).map(this::toDto);
-        return null;
+       return jobOfferRepository.findById(id).map(this::toDto);
+
     }
 
     @Override

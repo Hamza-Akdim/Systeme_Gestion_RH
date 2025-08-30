@@ -3,6 +3,7 @@ package com.talentwave.domain.offer;
 import com.talentwave.domain.enumeration.Contrat;
 import com.talentwave.domain.enumeration.Secteur;
 import com.talentwave.domain.hr.JobProfile;
+import com.talentwave.domain.profilCV.ProfileCV;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -54,6 +55,11 @@ public class JobOffer {
     @NotNull
     @FutureOrPresent
     private LocalDate closingDate;
+
+
+    @OneToMany(mappedBy = "jobOffer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ProfileCV> profileCVS;
+
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "jobOffer_id", referencedColumnName = "id", nullable = false)
